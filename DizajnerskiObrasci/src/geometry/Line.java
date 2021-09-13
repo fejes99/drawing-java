@@ -7,21 +7,6 @@ public class Line extends Shape {
 
 	private Point startPoint;
 	private Point endPoint;
-	private Color color;
-	
-	public Line() {
-		
-	}
-	
-	public Line(Point startPoint, Point endPoint) {
-		this.startPoint = startPoint;
-		setEndPoint(endPoint);
-	}
-	
-	public Line(Point startPoint, Point endPoint, boolean selected) {
-		this(startPoint, endPoint);
-		setSelected(selected);
-	}
 
 	public Point getStartPoint() {
 		return startPoint;
@@ -39,25 +24,28 @@ public class Line extends Shape {
 		this.endPoint = endPoint;
 	}
 
-	public Color getColor() {
-		return color;
+	public Line() {
+
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
+	public Line(Point startPoint, Point endPoint) {
+		this.startPoint = startPoint;
+		this.endPoint = endPoint;
 	}
 
-	@Override
-	public void draw(Graphics g) {
-		g.setColor(getColor());
-		g.drawLine(this.getStartPoint().getX(), getStartPoint().getY(), this.getEndPoint().getX(), this.getEndPoint().getY());
-		
-		if (isSelected()) {
-			g.setColor(Color.BLUE);
-			g.drawRect(getStartPoint().getX() - 3, getStartPoint().getY() - 3, 6, 6);
-			g.drawRect(getEndPoint().getX() - 3, getEndPoint().getY() - 3, 6, 6);
-			g.drawRect(middleOfLine().getX() - 3, middleOfLine().getY() - 3, 6, 6);
-		}
+	public Line(Point startPoint, Point endPoint, Color color) {
+		this(startPoint, endPoint);
+		setColor(color);
+	}
+
+	public Line(Point startPoint, Point endPoint, boolean selected) {
+		this(startPoint, endPoint);
+		setSelected(selected);
+	}
+
+	public Line(Point startPoint, Point endPoint, boolean selected, Color color) {
+		this(startPoint, endPoint, selected);
+		setColor(color);
 	}
 
 	public Point middleOfLine() {
@@ -66,16 +54,29 @@ public class Line extends Shape {
 		Point p = new Point(middleByX, middleByY);
 		return p;
 	}
-	
-	
+
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(getColor());
+		g.drawLine(this.getStartPoint().getX(), getStartPoint().getY(), this.getEndPoint().getX(),
+				this.getEndPoint().getY());
+
+		if (isSelected()) {
+			g.setColor(Color.BLUE);
+			g.drawRect(getStartPoint().getX() - 3, getStartPoint().getY() - 3, 6, 6);
+			g.drawRect(getEndPoint().getX() - 3, getEndPoint().getY() - 3, 6, 6);
+			g.drawRect(middleOfLine().getX() - 3, middleOfLine().getY() - 3, 6, 6);
+		}
+	}
+
 	public boolean contains(int x, int y) {
-		if((startPoint.distance(x, y) + endPoint.distance(x, y)) - length() <= 0.05) {
+		if ((startPoint.distance(x, y) + endPoint.distance(x, y)) - length() <= 0.05) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean equals(Object obj) {
 		if (obj instanceof Line) {
 			Line l = (Line) obj;
@@ -88,12 +89,12 @@ public class Line extends Shape {
 			return false;
 		}
 	}
-	
+
 	public double length() {
 		return startPoint.distance(endPoint.getX(), endPoint.getY());
 	}
-	
+
 	public String toString() {
 		return startPoint + "-->" + endPoint;
-	}	
+	}
 }

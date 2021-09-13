@@ -2,28 +2,14 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 
 public class Donut extends Circle {
 
 	private int innerRadius;
-	private Color outerCircleBorderColor;
-	private Color outerCircleFillColor;
-	private Color innerCircleBorderColor;
-	private Color innerCircleFillColor;
-	
-	public Donut() {
-		
-	}
-	
-	public Donut(Point center, int radius, int innerRadius) {
-		super(center, radius);
-		this.innerRadius = innerRadius;
-	}
-	
-	public Donut(Point center, int radius, int innerRadius, boolean selected) {
-		this(center, radius, innerRadius);
-		setSelected(selected);
-	}
 
 	public int getInnerRadius() {
 		return innerRadius;
@@ -33,79 +19,90 @@ public class Donut extends Circle {
 		this.innerRadius = innerRadius;
 	}
 
-	public Color getOuterCircleBorderColor() {
-		return outerCircleBorderColor;
+	public Donut() {
+
 	}
 
-	public void setOuterCircleBorderColor(Color externalCircleBorderColor) {
-		this.outerCircleBorderColor = externalCircleBorderColor;
+	public Donut(Point center, int radius, int innerRadius) {
+		super(center, radius);
+		this.innerRadius = innerRadius;
 	}
 
-	public Color getOuterCircleFillColor() {
-		return outerCircleFillColor;
+	public Donut(Point center, int radius, int innerRadius, boolean selected) {
+		this(center, radius, innerRadius);
+		setSelected(selected);
 	}
 
-	public void setOuterCircleFillColor(Color externalCircleInnerColor) {
-		this.outerCircleFillColor = externalCircleInnerColor;
+	public Donut(Point center, int radius, int innerRadius, boolean selected, Color color) {
+		this(center, radius, innerRadius, selected);
+		setColor(color);
 	}
 
-	public Color getInnerCircleBorderColor() {
-		return innerCircleBorderColor;
-	}
-
-	public void setInnerCircleBorderColor(Color internalCircleBorderColor) {
-		this.innerCircleBorderColor = internalCircleBorderColor;
-	}
-
-	public Color getInnerCircleFillColor() {
-		return innerCircleFillColor;
-	}
-
-	public void setInnerCircleFillColor(Color internalCircleInnerColor) {
-		this.innerCircleFillColor = internalCircleInnerColor;
+	public Donut(Point center, int radius, int innerRadius, boolean selected, Color color, Color innerColor) {
+		this(center, radius, innerRadius, selected, color);
+		setInnerColor(innerColor);
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(getOuterCircleBorderColor());
-		g.drawOval(this.getCenter().getX() - this.radius, getCenter().getY() - getRadius(), this.getRadius() * 2, this.getRadius() * 2);
-		
-		g.setColor(getOuterCircleFillColor());
-		g.fillOval(this.getCenter().getX() + 1 - this.radius, getCenter().getY() + 1 - getRadius(), (this.getRadius() - 1) * 2, (this.getRadius() - 1) * 2);
-		//super.draw(g);
-		
-		g.setColor(getInnerCircleBorderColor());
-		g.drawOval(this.getCenter().getX() - this.innerRadius, this.getCenter().getY() - this.getInnerRadius(), this.getInnerRadius()*2, this.innerRadius*2);
-		
-		g.setColor(getInnerCircleFillColor());
-		g.fillOval(this.getCenter().getX()+1 - this.innerRadius, this.getCenter().getY() + 1 - this.getInnerRadius(), (this.getInnerRadius() - 1) * 2, (this.innerRadius - 1) * 2);
-		
+		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		java.awt.Shape outer = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(),
+				this.getCenter().getY() - this.getRadius(), this.getRadius() * 2, this.getRadius() * 2);
+
+		java.awt.Shape inner = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius(),
+				this.getCenter().getY() - this.getInnerRadius(), this.getInnerRadius() * 2, this.getInnerRadius() * 2);
+
+		Area circle = new Area(outer);
+		circle.subtract(new Area(inner));
+
+		g2d.setColor(this.getInnerColor());
+		g2d.fill(circle);
+
+		g2d.setColor(this.getColor());
+		g2d.draw(circle);
+
+		g2d.dispose();
+
 		if (isSelected()) {
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
-			g.drawRect(getCenter().getX() + getRadius() - 3, getCenter().getY() - 3, 6, 6);
-			g.drawRect(getCenter().getX() - getRadius() - 3, getCenter().getY() - 3, 6, 6);
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() + getRadius() - 3, 6, 6);
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() - getRadius() - 3, 6, 6);
+			super.selectCircle(g);
 		}
 	}
-	
-	public boolean contains(int x, int y) {
-		double dFromCenter = this.getCenter().distance(x, y);
-		return dFromCenter > innerRadius && super.contains(x, y);
+
+	public void fill(Graphics g) {
+		g.setColor(getInnerColor());
+		super.fill(g);
+		g.setColor(Color.WHITE);
+		g.fillOval(getCenter().getX() - getInnerRadius(), getCenter().getY() - getInnerRadius(), getInnerRadius() * 2,
+				getInnerRadius() * 2);
 	}
-	
-	public boolean contains(Point p) {
-		double dFromCenter = this.getCenter().distance(p.getX(), p.getY());
-		return dFromCenter > innerRadius && super.contains(p.getX(), p.getY());
+
+	public int compareTo(Object o) {
+		if (o instanceof Donut) {
+			return (int) (this.area() - ((Donut) o).area());
+		}
+		return 0;
 	}
-	
+
 	public double area() {
 		return super.area() - innerRadius * innerRadius * Math.PI;
 	}
-	
+
+	public boolean contains(int x, int y) {
+		double dFromCenter = this.getCenter().distance(x, y);
+		return super.contains(x, y) && dFromCenter > innerRadius;
+	}
+
+	public boolean contains(Point p) {
+		double dFromCenter = this.getCenter().distance(p.getX(), p.getY());
+		return super.contains(p) && dFromCenter > innerRadius;
+	}
+
 	public boolean equals(Object obj) {
 		if (obj instanceof Donut) {
 			Donut d = (Donut) obj;
-			if (this.getCenter().equals(d.getCenter()) && this.getRadius() == d.getRadius() && this.innerRadius == d.getInnerRadius()) {
+			if (this.getCenter().equals(d.getCenter()) && this.getRadius() == d.getRadius()
+					&& this.innerRadius == d.getInnerRadius()) {
 				return true;
 			} else {
 				return false;
@@ -114,9 +111,9 @@ public class Donut extends Circle {
 			return false;
 		}
 	}
-	
+
 	public String toString() {
-		return super.toString() + ", inner radius = " + innerRadius ;
+		return super.toString() + ", inner radius = " + innerRadius;
 	}
-	
+
 }

@@ -3,36 +3,11 @@ package geometry;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Rectangle extends Shape {
+public class Rectangle extends SurfaceShape {
 
-	private Point upperLeftPoint;
 	private int width;
 	private int height;
-	private Color lineColor;
-	private Color internalColor;
-	
-	public Rectangle() {
-
-	}
-
-	public Rectangle(Point upperLeftPoint, int height, int width) {
-		this.upperLeftPoint = upperLeftPoint;
-		setHeight(height);
-		setWidth(width);
-	}
-
-	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected) {
-		this(upperLeftPoint, height, width);
-		setSelected(selected);
-	}
-
-	public Point getUpperLeftPoint() {
-		return upperLeftPoint;
-	}
-
-	public void setUpperLeftPoint(Point upperLeftPoint) {
-		this.upperLeftPoint = upperLeftPoint;
-	}
+	private Point upperLeftPoint;
 
 	public int getWidth() {
 		return width;
@@ -50,62 +25,100 @@ public class Rectangle extends Shape {
 		this.height = height;
 	}
 
-	public Color getLineColor() {
-		return lineColor;
+	public Point getUpperLeftPoint() {
+		return upperLeftPoint;
 	}
 
-	public void setLineColor(Color lineColor) {
-		this.lineColor = lineColor;
+	public void setUpperLeftPoint(Point upperLeftPoint) {
+		this.upperLeftPoint = upperLeftPoint;
 	}
 
-	public Color getInternalColor() {
-		return internalColor;
+	public Rectangle() {
+
 	}
 
-	public void setInternalColor(Color internalColor) {
-		this.internalColor = internalColor;
+	public Rectangle(Point upperLeftPoint, int height, int width) {
+		this.upperLeftPoint = upperLeftPoint;
+		setHeight(height);
+		setWidth(width);
+	}
+
+	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected) {
+		this(upperLeftPoint, height, width);
+		setSelected(selected);
+	}
+
+	public Rectangle(Point upperLeftPoint, int height, int width, Color color) {
+		this(upperLeftPoint, height, width);
+		setColor(color);
+	}
+
+	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected, Color color) {
+		this(upperLeftPoint, height, width, selected);
+		setColor(color);
+	}
+
+	public Rectangle(Point upperLeftPoint, int width, int height, Color color, Color innerColor) {
+		this(upperLeftPoint, width, height, color);
+		setInnerColor(innerColor);
+	}
+
+	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected, Color color, Color innerColor) {
+		this(upperLeftPoint, width, height, selected, color);
+		setInnerColor(innerColor);
+	}
+
+	@Override
+	public void fill(Graphics g) {
+		g.setColor(getInnerColor());
+		g.fillRect(this.upperLeftPoint.getX() + 1, this.getUpperLeftPoint().getY() + 1, width - 1, height - 1);
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(getColor());
-		g.drawRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.getWidth(), this.height);
-		
-		g.setColor(getInternalColor());
-		g.fillRect(getUpperLeftPoint().getX() + 1, getUpperLeftPoint().getY() + 1, getWidth() - 1, getHeight() - 1);
-		
-		if(isSelected()) {
+		g.drawRect(this.getUpperLeftPoint().getX(), this.getUpperLeftPoint().getY(), this.width, this.height);
+
+		fill(g);
+
+		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			g.drawRect(getUpperLeftPoint().getX() - 3, getUpperLeftPoint().getY() - 3, 6, 6);
 			g.drawRect(this.getUpperLeftPoint().getX() - 3 + getWidth(), this.getUpperLeftPoint().getY() - 3, 6, 6);
 			g.drawRect(this.getUpperLeftPoint().getX() - 3, this.getUpperLeftPoint().getY() - 3 + getHeight(), 6, 6);
-			g.drawRect(this.getUpperLeftPoint().getX() + getWidth() - 3, this.getUpperLeftPoint().getY() + getHeight() - 3, 6, 6);
+			g.drawRect(this.getUpperLeftPoint().getX() + getWidth() - 3,
+					this.getUpperLeftPoint().getY() + getHeight() - 3, 6, 6);
 		}
 	}
 
-	
+	public double area() {
+		return width * height;
+	}
+
 	public boolean contains(int x, int y) {
-		if (this.getUpperLeftPoint().getX() <= x && x<= this.getUpperLeftPoint().getX() + width && this.getUpperLeftPoint().getY() <= y 
-				&& y <= this.getUpperLeftPoint().getY() + height) {
+		if (this.getUpperLeftPoint().getX() <= x && x <= this.getUpperLeftPoint().getX() + width
+				&& this.getUpperLeftPoint().getY() <= y && y <= this.getUpperLeftPoint().getY() + height) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean contains(Point p) {
-		if (this.getUpperLeftPoint().getX() <= p.getX() && p.getX()<= this.getUpperLeftPoint().getX() + width 
-				&& this.getUpperLeftPoint().getY() <= p.getY() && p.getY() <= this.getUpperLeftPoint().getY() + height) {
+		if (this.getUpperLeftPoint().getX() <= p.getX() && p.getX() <= this.getUpperLeftPoint().getX() + width
+				&& this.getUpperLeftPoint().getY() <= p.getY()
+				&& p.getY() <= this.getUpperLeftPoint().getY() + height) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean equals(Object obj) {
 		if (obj instanceof Rectangle) {
 			Rectangle r = (Rectangle) obj;
-			if (this.upperLeftPoint.equals(r.getUpperLeftPoint()) && this.height == r.getHeight() && this.width == r.getWidth()) {
+			if (this.upperLeftPoint.equals(r.getUpperLeftPoint()) && this.height == r.getHeight()
+					&& this.width == r.getWidth()) {
 				return true;
 			} else {
 				return false;
@@ -114,12 +127,8 @@ public class Rectangle extends Shape {
 			return false;
 		}
 	}
-	
-	public int area() {
-		return width * height;
-	}
-	
+
 	public String toString() {
 		return "Upper left point = " + upperLeftPoint + ", height = " + height + ", width = " + width;
-	}	
+	}
 }

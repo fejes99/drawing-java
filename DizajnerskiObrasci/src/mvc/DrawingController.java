@@ -1,132 +1,182 @@
 package mvc;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import dialogs.CreateCircleDialog;
-import dialogs.CreateDonutDialog;
-import dialogs.CreatePointLineDialog;
-import dialogs.CreateRectangleDialog;
-import dialogs.test;
+import command.CmdAddShape;
+import command.CmdRemoveShape;
+import command.CmdSelectShape;
+import command.Command;
+import dialogs.CircleDialog;
+import dialogs.DonutDialog;
+import dialogs.PointLineDialog;
+import dialogs.RectangleDialog;
 import geometry.Circle;
 import geometry.Donut;
 import geometry.Line;
 import geometry.Point;
 import geometry.Rectangle;
+import geometry.Shape;
 
 public class DrawingController {
-	
+
 	private DrawingModel model;
 	private DrawingFrame frame;
-	
+
+	Command command;
+
 	private int counter = 1;
-	
+
 	private int height;
 	private int width;
 	private int radius;
 	private int innerRadius;
-	
+
 	private Point startPoint;
 	private Point endPoint;
-	
+
+	private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
+
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
 	}
-	
+
+	public void selectShapes(MouseEvent e) {
+		Shape selectedShape = null;
+		Shape shape = null;
+
+		Iterator<Shape> it = this.model.getShapes().iterator();
+
+		Command command = null;
+
+		while (it.hasNext()) {
+			shape = it.next();
+
+			if (shape.contains(e.getX(), e.getY())) {
+				selectedShape = shape;
+			}
+
+		}
+
+		if (selectedShape != null) {
+			if (selectedShape.isSelected()) {
+				command = new CmdSelectShape(this, selectedShape);
+				command.execute();
+
+			} else {
+				command = new CmdSelectShape(this, selectedShape);
+				command.execute();
+			}
+		}
+		frame.repaint();
+	}
+
 	public void drawPoint(MouseEvent e) {
-		CreatePointLineDialog dlgCreatePoint = new CreatePointLineDialog("point");
-		dlgCreatePoint.pack();
-		dlgCreatePoint.setVisible(true);
-		if (dlgCreatePoint.isConfirmed()) {
+		PointLineDialog dlgPoint = new PointLineDialog("point");
+		dlgPoint.pack();
+		dlgPoint.setVisible(true);
+		if (dlgPoint.isConfirmed()) {
 			Point p = new Point(e.getX(), e.getY(), false);
-			p.setColor(dlgCreatePoint.getColor());
-			model.add(p);
+			p.setColor(dlgPoint.getColor());
+			command = new CmdAddShape(model, p);
+			command.execute();
 			frame.repaint();
 		} // if canceled null pointer exception occur
 	}
-	
+
 	public void drawLine(MouseEvent e) {
-		CreatePointLineDialog dlgCreateLine = new CreatePointLineDialog("line");
-		if(counter == 1) {
-			startPoint=	new Point(e.getX(), e.getY());
-			counter++;
-		} else {
-			endPoint = new Point(e.getX(), e.getY());
-			dlgCreateLine.pack();
-			dlgCreateLine.setVisible(true);
-			if(dlgCreateLine.isConfirmed()) {
-				Line l = new Line(startPoint, endPoint, false);
-				l.setColor(dlgCreateLine.getColor());
-				model.add(l);
-				frame.repaint();
-			}
-			counter = 1;
+		PointLineDialog dlgLine = new PointLineDialog("line");
+		if (startPoint == null) {
+			startPoint = new Point(e.getX(), e.getY());
+			return;
 		}
+		endPoint = new Point(e.getX(), e.getY());
+		dlgLine.setVisible(true);
+		if (dlgLine.isConfirmed()) {
+			Line l = new Line(startPoint, endPoint, false);
+			l.setColor(dlgLine.getColor());
+			command = new CmdAddShape(model, l);
+			command.execute();
+			frame.repaint();
+		}
+		startPoint = null;
 	}
-	
+
 	public void drawRectangle(MouseEvent e) {
-		CreateRectangleDialog dlgCreateRectangle = new CreateRectangleDialog();
-		startPoint=	new Point(e.getX(), e.getY());
-		dlgCreateRectangle.pack();
-		dlgCreateRectangle.setVisible(true);
-		if(dlgCreateRectangle .isConfirmed()) {
-			height = Integer.parseInt(dlgCreateRectangle .getTxtHeight().getText());
-			width = Integer.parseInt(dlgCreateRectangle .getTxtWidth().getText());
+		RectangleDialog dlgRectangle = new RectangleDialog();
+		startPoint = new Point(e.getX(), e.getY());
+		dlgRectangle.pack();
+		dlgRectangle.setVisible(true);
+		if (dlgRectangle.isConfirmed()) {
+			height = Integer.parseInt(dlgRectangle.getTxtHeight().getText());
+			width = Integer.parseInt(dlgRectangle.getTxtWidth().getText());
 			Rectangle r = new Rectangle(startPoint, height, width);
-			
+
 			// not showing default color
-			r.setLineColor(dlgCreateRectangle .getBorderColor());
-			r.setInternalColor(dlgCreateRectangle .getInnerColor());
-			model.add(r);
+			r.setColor(dlgRectangle.getColor());
+			r.setInnerColor(dlgRectangle.getInnerColor());
+			command = new CmdAddShape(model, r);
+			command.execute();
 		}
-		
+
 		frame.repaint();
 	}
-	
+
 	public void drawCircle(MouseEvent e) {
-		CreateCircleDialog dlgCreateCircle = new CreateCircleDialog();
+		CircleDialog dlgCircle = new CircleDialog();
 		startPoint = new Point(e.getX(), e.getY());
-		dlgCreateCircle.pack();
-		dlgCreateCircle.setVisible(true);
-		if(dlgCreateCircle.isConfirmed()) {
-			radius = Integer.parseInt(dlgCreateCircle.getTxtRadius().getText());
+		dlgCircle.pack();
+		dlgCircle.setVisible(true);
+		if (dlgCircle.isConfirmed()) {
+			radius = Integer.parseInt(dlgCircle.getTxtRadius().getText());
 		}
-		
+
 		Circle c = new Circle(startPoint, radius);
-		c.setColor(dlgCreateCircle.getBorderColor());
-		c.setInternalColor(dlgCreateCircle.getInnerColor());
-		model.add(c);
+		c.setColor(dlgCircle.getBorderColor());
+		c.setInnerColor(dlgCircle.getInnerColor());
+		command = new CmdAddShape(model, c);
+		command.execute();
 		frame.repaint();
 	}
-	
-	// color scheme is not correct
+
 	public void drawDonut(MouseEvent e) {
-		CreateDonutDialog dlgCreateDonut = new CreateDonutDialog();
+		DonutDialog dlgDonut = new DonutDialog();
 		startPoint = new Point(e.getX(), e.getY());
-		dlgCreateDonut.pack();
-		dlgCreateDonut.setVisible(true);
-		if(dlgCreateDonut.isConfirmed()) {
-			radius = Integer.parseInt(dlgCreateDonut.getTxtOuterCircleRadius().getText());
-			innerRadius = Integer.parseInt(dlgCreateDonut.getTxtOuterCircleRadius().getText());
+		dlgDonut.pack();
+		dlgDonut.setVisible(true);
+		if (dlgDonut.isConfirmed()) {
+			radius = Integer.parseInt(dlgDonut.getTxtRadius().getText());
+			innerRadius = Integer.parseInt(dlgDonut.getTxtInnerRadius().getText());
 		}
 		Donut d = new Donut(startPoint, radius, innerRadius);
-		d.setOuterCircleBorderColor(dlgCreateDonut.getOuterCircleBorderColor());
-		d.setInnerCircleBorderColor(dlgCreateDonut.getInnerCircleBorderColor());
-		d.setOuterCircleFillColor(dlgCreateDonut.getOuterCircleFillColor());
-		d.setInnerCircleFillColor(dlgCreateDonut.getInnerCircleFillColor());
-		model.add(d);
+		d.setColor(dlgDonut.getColor());
+		d.setInnerColor(dlgDonut.getInnerColor());
+		command = new CmdAddShape(model, d);
+		command.execute();
 		frame.repaint();
 	}
-	
-	public void deleteShape() {
-	}
-	
+
 	public void modifyShape() {
-		
+
+	}
+
+	public void deleteShape() {
+		Shape shape;
+
+		for (int i = 0; i < selectedShapes.size(); i++) {
+			shape = selectedShapes.get(0);
+			command = new CmdRemoveShape(model, shape, model.getShapes().indexOf(shape));
+			command.execute();
+			selectedShapes.remove(shape);
+		}
+
+		frame.repaint();
+	}
+
+	public ArrayList<Shape> getSelectedShapes() {
+		return selectedShapes;
 	}
 
 }
