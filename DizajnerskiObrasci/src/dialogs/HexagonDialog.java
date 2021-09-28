@@ -16,21 +16,19 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 
-public class RectangleDialog extends JDialog {
+public class HexagonDialog extends JDialog {
 
-	private Color color = new Color(0, 0, 0);;
-	private Color innerColor = new Color(255, 255, 255);;
+	private Color color = new Color(0, 0, 0);
+	private Color innerColor = new Color(255, 255, 255);
 	private Boolean confirmed;
 
 	private JPanel pnlCenter;
 	private JPanel pnlBottom;
-	private JLabel lblWidth;
-	private JLabel lblHeight;
-	private JLabel lblBorderColor;
+	private JLabel lblRadius;
+	private JLabel lblColor;
 	private JLabel lblInnerColor;
-	private JTextField txtWidth;
-	private JTextField txtHeight;
-	private JButton btnBorderColor;
+	private JTextField txtRadius;
+	private JButton btnColor;
 	private JButton btnInnerColor;
 	private JButton btnConfirm;
 	private JButton btnCancel;
@@ -39,8 +37,8 @@ public class RectangleDialog extends JDialog {
 		return color;
 	}
 
-	public void setColor(Color borderColor) {
-		this.color = borderColor;
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public Color getInnerColor() {
@@ -59,25 +57,16 @@ public class RectangleDialog extends JDialog {
 		this.confirmed = confirmed;
 	}
 
-	public JTextField getTxtWidth() {
-		return txtWidth;
+	public JTextField getTxtRadius() {
+		return txtRadius;
 	}
 
-	public void setTxtWidth(JTextField txtWidth) {
-		this.txtWidth = txtWidth;
+	public void setTxtRadius(JTextField txtRadius) {
+		this.txtRadius = txtRadius;
 	}
 
-	public JTextField getTxtHeight() {
-		return txtHeight;
-	}
-
-	public void setTxtHeight(JTextField txtHeight) {
-		this.txtHeight = txtHeight;
-	}
-
-	public RectangleDialog() {
-
-		setTitle("Create rectangle");
+	public HexagonDialog() {
+		setTitle("Create Hexagon");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setModal(true);
@@ -87,11 +76,11 @@ public class RectangleDialog extends JDialog {
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
 		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][]"));
 
-		lblWidth = new JLabel("Width:");
-		pnlCenter.add(lblWidth, "cell 0 0,alignx trailing");
+		lblRadius = new JLabel("Radius:");
+		pnlCenter.add(lblRadius, "cell 0 0,alignx trailing");
 
-		txtWidth = new JTextField();
-		txtWidth.addKeyListener(new KeyAdapter() {
+		txtRadius = new JTextField();
+		txtRadius.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
@@ -101,38 +90,20 @@ public class RectangleDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtWidth, "cell 1 0,growx");
-		txtWidth.setColumns(10);
+		pnlCenter.add(txtRadius, "cell 1 0,growx");
+		txtRadius.setColumns(10);
 
-		lblHeight = new JLabel("Height:");
-		pnlCenter.add(lblHeight, "cell 0 1,alignx trailing");
+		lblColor = new JLabel("Color:");
+		pnlCenter.add(lblColor, "cell 0 2");
 
-		txtHeight = new JTextField();
-		txtHeight.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
-					e.consume();
-					getToolkit().beep();
-				}
-			}
-		});
-
-		pnlCenter.add(txtHeight, "cell 1 1,growx");
-		txtHeight.setColumns(10);
-
-		lblBorderColor = new JLabel("Border color:");
-		pnlCenter.add(lblBorderColor, "cell 0 2");
-
-		btnBorderColor = new JButton("Border Color");
-		btnBorderColor.addMouseListener(new MouseAdapter() {
+		btnColor = new JButton("Border Color");
+		btnColor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				color = JColorChooser.showDialog(null, "Border Color:", color.GREEN);
 			}
 		});
-		pnlCenter.add(btnBorderColor, "cell 1 2");
+		pnlCenter.add(btnColor, "cell 1 2");
 
 		lblInnerColor = new JLabel("Inner color:");
 		pnlCenter.add(lblInnerColor, "cell 0 3");
@@ -170,7 +141,5 @@ public class RectangleDialog extends JDialog {
 			}
 		});
 		pnlBottom.add(btnCancel);
-
 	}
-
 }

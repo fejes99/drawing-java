@@ -4,20 +4,20 @@ import javax.swing.JFrame;
 
 public class DrawingApp {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-	DrawingModel model = new DrawingModel();
-	DrawingFrame frame = new DrawingFrame();
-	frame.getView().setModel(model);
+		DrawingModel model = new DrawingModel();
+		DrawingFrame frame = new DrawingFrame();
+		frame.getView().setModel(model);
 
-	DrawingController controller = new DrawingController(model, frame);
-	frame.setController(controller);
+		DrawingController controller = new DrawingController(model, frame);
+		frame.setController(controller);
 
-	frame.setTitle("Drawing | David Fejes IT70-2017");
-	frame.setSize(1000, 600);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setVisible(true);
-	frame.setLocationRelativeTo(null);
-    }
+		frame.setTitle("Drawing | David Fejes IT70-2017");
+		frame.setSize(1200, 800);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+	}
 
 }

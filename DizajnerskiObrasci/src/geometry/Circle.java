@@ -114,4 +114,31 @@ public class Circle extends SurfaceShape {
 	public String toString() {
 		return "Center = " + center + ", radius = " + radius;
 	}
+
+	@Override
+	public void moveBy(int byX, int byY) {
+		this.center.moveBy(byX, byY);
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (o instanceof Circle) {
+			return this.radius - ((Circle) o).radius;
+		}
+		return 0;
+	}
+
+	public Circle clone(Circle c) {
+		c.getCenter().setX(this.getCenter().getX());
+		c.getCenter().setY(this.getCenter().getY());
+		try {
+			c.setRadius(this.getRadius());
+		} catch (Exception e) {
+			throw new NumberFormatException("Radius has to be a value greater then 0!");
+		}
+		c.setColor(this.getColor());
+		c.setInnerColor(this.getInnerColor());
+
+		return c;
+	}
 }

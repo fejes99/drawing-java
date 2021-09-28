@@ -112,6 +112,21 @@ public class Donut extends Circle {
 		}
 	}
 
+	public Donut clone(Donut d) {
+		d.getCenter().setX(this.getCenter().getX());
+		d.getCenter().setY(this.getCenter().getY());
+		try {
+			d.setRadius(this.getRadius());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		d.setInnerRadius(this.getInnerRadius());
+		d.setColor(this.getColor());
+		d.setInnerColor(this.getInnerColor());
+
+		return d;
+	}
+
 	public String toString() {
 		return super.toString() + ", inner radius = " + innerRadius;
 	}

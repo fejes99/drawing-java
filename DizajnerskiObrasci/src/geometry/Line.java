@@ -97,4 +97,28 @@ public class Line extends Shape {
 	public String toString() {
 		return startPoint + "-->" + endPoint;
 	}
+
+	@Override
+	public void moveBy(int byX, int byY) {
+		this.startPoint.moveBy(byX, byY);
+		this.endPoint.moveBy(byX, byY);
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (o instanceof Line) {
+			return (int) (this.length() - ((Line) o).length());
+		}
+		return 0;
+	}
+
+	public Line clone(Line l) {
+		l.getStartPoint().setX(this.getStartPoint().getX());
+		l.getStartPoint().setY(this.getStartPoint().getY());
+		l.getEndPoint().setX(this.getEndPoint().getX());
+		l.getEndPoint().setY(this.getEndPoint().getY());
+		l.setColor(this.getColor());
+
+		return l;
+	}
 }

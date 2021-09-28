@@ -3,36 +3,36 @@ package geometry;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public abstract class Shape {
+public abstract class Shape implements Moveable, Comparable {
 
-    private boolean selected;
-    private Color color;
+	private boolean selected;
+	private Color color;
 
-    public abstract void draw(Graphics g);
+	public Shape() {
 
-    public abstract boolean contains(int x, int y);
+	}
 
-    public Shape() {
+	public Shape(boolean selected) {
+		this.selected = selected;
+	}
 
-    }
+	public boolean isSelected() {
+		return selected;
+	}
 
-    public Shape(boolean selected) {
-	this.selected = selected;
-    }
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 
-    public boolean isSelected() {
-	return selected;
-    }
+	public Color getColor() {
+		return color;
+	}
 
-    public void setSelected(boolean selected) {
-	this.selected = selected;
-    }
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
-    public Color getColor() {
-	return color;
-    }
+	public abstract void draw(Graphics g);
 
-    public void setColor(Color color) {
-	this.color = color;
-    }
+	public abstract boolean contains(int x, int y);
 }

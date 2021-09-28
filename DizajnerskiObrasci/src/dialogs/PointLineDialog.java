@@ -15,7 +15,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class PointLineDialog extends JDialog {
 
-	private Color color;
+	private Color color = new Color(0, 0, 0);;
 	private Boolean confirmed;
 
 	private JPanel pnlBottom;

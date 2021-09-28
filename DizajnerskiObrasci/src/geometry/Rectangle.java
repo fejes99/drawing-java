@@ -131,4 +131,29 @@ public class Rectangle extends SurfaceShape {
 	public String toString() {
 		return "Upper left point = " + upperLeftPoint + ", height = " + height + ", width = " + width;
 	}
+
+	@Override
+	public void moveBy(int byX, int byY) {
+		this.upperLeftPoint.moveBy(byX, byY);
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (o instanceof Rectangle) {
+			return (int) (this.area() - ((Rectangle) o).area());
+		}
+		return 0;
+	}
+
+	public Rectangle clone(Rectangle r) {
+
+		r.getUpperLeftPoint().setX(this.getUpperLeftPoint().getX());
+		r.getUpperLeftPoint().setY(this.getUpperLeftPoint().getY());
+		r.setHeight(this.getHeight());
+		r.setWidth(this.getWidth());
+		r.setColor(this.getColor());
+		r.setInnerColor(this.getInnerColor());
+
+		return r;
+	}
 }

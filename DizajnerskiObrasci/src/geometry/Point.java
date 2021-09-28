@@ -88,4 +88,27 @@ public class Point extends Shape {
 		return "(" + x + ", " + y + ")";
 	}
 
+	@Override
+	public void moveBy(int byX, int byY) {
+		this.x = this.x + byX;
+		this.y = this.y + byY;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (o instanceof Point) {
+			Point p = new Point(0, 0);
+			return (int) (this.distance(p.getX(), p.getY()) - ((Point) o).distance(p.getX(), p.getY()));
+		}
+		return 0;
+	}
+
+	public Point clone(Point p) {
+		p.setX(this.getX());
+		p.setY(this.getY());
+		p.setColor(this.getColor());
+
+		return p;
+	}
+
 }

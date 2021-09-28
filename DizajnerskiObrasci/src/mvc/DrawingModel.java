@@ -6,21 +6,25 @@ import geometry.Shape;
 
 public class DrawingModel {
 
-    private ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 
-    public ArrayList<Shape> getShapes() {
-	return shapes;
-    }
+	public DrawingModel() {
 
-    public void add(Shape s) {
-	shapes.add(s);
-    }
+	}
 
-    public void remove(Shape s) {
-	shapes.remove(s);
-    }
+	public ArrayList<Shape> getShapes() {
+		return shapes;
+	}
 
-    public Shape getShape(int index) {
-	return shapes.get(index);
-    }
+	public void add(Shape s) {
+		shapes.add(s);
+	}
+
+	public void remove(Shape s) {
+		shapes.remove(s);
+	}
+
+	public Shape getShape(int index) {
+		return shapes.get(index);
+	}
 }

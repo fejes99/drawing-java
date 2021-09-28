@@ -4,12 +4,14 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import adapter.HexagonAdapter;
 import command.CmdAddShape;
 import command.CmdRemoveShape;
 import command.CmdSelectShape;
 import command.Command;
 import dialogs.CircleDialog;
 import dialogs.DonutDialog;
+import dialogs.HexagonDialog;
 import dialogs.PointLineDialog;
 import dialogs.RectangleDialog;
 import geometry.Circle;
@@ -134,7 +136,7 @@ public class DrawingController {
 		}
 
 		Circle c = new Circle(startPoint, radius);
-		c.setColor(dlgCircle.getBorderColor());
+		c.setColor(dlgCircle.getColor());
 		c.setInnerColor(dlgCircle.getInnerColor());
 		command = new CmdAddShape(model, c);
 		command.execute();
@@ -154,6 +156,21 @@ public class DrawingController {
 		d.setColor(dlgDonut.getColor());
 		d.setInnerColor(dlgDonut.getInnerColor());
 		command = new CmdAddShape(model, d);
+		command.execute();
+		frame.repaint();
+	}
+
+	public void drawHexagon(MouseEvent e) {
+		HexagonDialog dlgHexagon = new HexagonDialog();
+		dlgHexagon.pack();
+		dlgHexagon.setVisible(true);
+		if (dlgHexagon.isConfirmed()) {
+			radius = Integer.parseInt(dlgHexagon.getTxtRadius().getText());
+		}
+		HexagonAdapter hexagonAdapter = new HexagonAdapter(new Point(e.getX(), e.getY()), radius);
+		hexagonAdapter.setHexagonBorderColor(dlgHexagon.getColor());
+		hexagonAdapter.setHexagonInnerColor(dlgHexagon.getInnerColor());
+		command = new CmdAddShape(model, hexagonAdapter);
 		command.execute();
 		frame.repaint();
 	}
@@ -178,5 +195,4 @@ public class DrawingController {
 	public ArrayList<Shape> getSelectedShapes() {
 		return selectedShapes;
 	}
-
 }

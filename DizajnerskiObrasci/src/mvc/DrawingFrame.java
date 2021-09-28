@@ -25,6 +25,7 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton btnCircle;
 	private JToggleButton btnDonut;
 	private JToggleButton btnSelect;
+	private JToggleButton btnHexagon;
 	private JButton btnModify;
 	private JButton btnDelete;
 
@@ -56,6 +57,8 @@ public class DrawingFrame extends JFrame {
 						controller.drawCircle(e);
 					} else if (btnDonut.isSelected()) {
 						controller.drawDonut(e);
+					} else if (btnHexagon.isSelected()) {
+						controller.drawHexagon(e);
 					} else if (btnSelect.isSelected()) {
 						controller.selectShapes(e);
 					}
@@ -97,6 +100,11 @@ public class DrawingFrame extends JFrame {
 		btnDonut.setToolTipText("Draw donut");
 		menuBar.add(btnDonut);
 		shapeBtns.add(btnDonut);
+
+		btnHexagon = new JToggleButton("Hexagon");
+		btnHexagon.setToolTipText("Draw hexagon");
+		menuBar.add(btnHexagon);
+		shapeBtns.add(btnHexagon);
 
 		pnlBottom = new JPanel();
 		getContentPane().add(pnlBottom, BorderLayout.SOUTH);

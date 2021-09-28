@@ -19,147 +19,147 @@ import net.miginfocom.swing.MigLayout;
 
 public class CircleDialog extends JDialog {
 
-    private Color borderColor = new Color(0, 0, 0);
-    private Color innerColor = new Color(255, 255, 255);
-    private Boolean confirmed;
+	private Color color = new Color(0, 0, 0);
+	private Color innerColor = new Color(255, 255, 255);
+	private Boolean confirmed;
 
-    private JPanel pnlCenter;
-    private JPanel pnlBottom;
-    private JButton btnConfirm;
-    private JButton btnCancel;
-    private JLabel lblRadius;
-    private JTextField txtRadius;
-    private JLabel lblBorderColor;
-    private JButton btnBorderColor;
-    private JLabel lblInnerColor;
-    private JButton btnInnerColor;
+	private JPanel pnlCenter;
+	private JPanel pnlBottom;
+	private JButton btnConfirm;
+	private JButton btnCancel;
+	private JLabel lblRadius;
+	private JTextField txtRadius;
+	private JLabel lblColor;
+	private JButton btnColor;
+	private JLabel lblInnerColor;
+	private JButton btnInnerColor;
 
-    public Color getBorderColor() {
-	return borderColor;
-    }
+	public Color getColor() {
+		return color;
+	}
 
-    public void setBorderColor(Color borderColor) {
-	this.borderColor = borderColor;
-    }
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
-    public Color getInnerColor() {
-	return innerColor;
-    }
+	public Color getInnerColor() {
+		return innerColor;
+	}
 
-    public void setInnerColor(Color innerColor) {
-	this.innerColor = innerColor;
-    }
+	public void setInnerColor(Color innerColor) {
+		this.innerColor = innerColor;
+	}
 
-    public Boolean isConfirmed() {
-	return confirmed;
-    }
+	public Boolean isConfirmed() {
+		return confirmed;
+	}
 
-    public void setConfirmed(Boolean confirmed) {
-	this.confirmed = confirmed;
-    }
+	public void setConfirmed(Boolean confirmed) {
+		this.confirmed = confirmed;
+	}
 
-    public JTextField getTxtRadius() {
-	return txtRadius;
-    }
+	public JTextField getTxtRadius() {
+		return txtRadius;
+	}
 
-    public void setTxtRadius(JTextField txtRadius) {
-	this.txtRadius = txtRadius;
-    }
+	public void setTxtRadius(JTextField txtRadius) {
+		this.txtRadius = txtRadius;
+	}
 
-    public CircleDialog() {
+	public CircleDialog() {
 
-	setTitle("Create circle");
-	setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	setLocationRelativeTo(null);
-	setModal(true);
-	setResizable(false);
+		setTitle("Create circle");
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setModal(true);
+		setResizable(false);
 
-	pnlCenter = new JPanel();
-	getContentPane().add(pnlCenter, BorderLayout.CENTER);
-	pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+		pnlCenter = new JPanel();
+		getContentPane().add(pnlCenter, BorderLayout.CENTER);
+		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][]"));
 
-	lblRadius = new JLabel("Radius:");
-	pnlCenter.add(lblRadius, "cell 0 0,alignx left");
+		lblRadius = new JLabel("Radius:");
+		pnlCenter.add(lblRadius, "cell 0 0,alignx left");
 
-	txtRadius = new JTextField();
-	txtRadius.addKeyListener(new KeyAdapter() {
-	    @Override
-	    public void keyTyped(KeyEvent e) {
-		char c = e.getKeyChar();
-		if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
-		    e.consume();
-		    getToolkit().beep();
-		}
-	    }
-	});
-	pnlCenter.add(txtRadius, "cell 1 0,growx");
-	txtRadius.setColumns(10);
+		txtRadius = new JTextField();
+		txtRadius.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+					e.consume();
+					getToolkit().beep();
+				}
+			}
+		});
+		pnlCenter.add(txtRadius, "cell 1 0,growx");
+		txtRadius.setColumns(10);
 
-	lblBorderColor = new JLabel("Border color:");
-	pnlCenter.add(lblBorderColor, "cell 0 1,alignx left");
+		lblColor = new JLabel("Border color:");
+		pnlCenter.add(lblColor, "cell 0 1,alignx left");
 
-	btnBorderColor = new JButton("Color");
-	btnBorderColor.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseClicked(MouseEvent e) {
-		borderColor = JColorChooser.showDialog(null, "SELECT CIRCLE COLOR", borderColor);
-		if (borderColor != null) {
-		    btnBorderColor.setBackground(borderColor);
-		}
-	    }
-	});
-	pnlCenter.add(btnBorderColor, "cell 1 1,alignx center");
+		btnColor = new JButton("Color");
+		btnColor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				color = JColorChooser.showDialog(null, "SELECT CIRCLE COLOR", color);
+				if (color != null) {
+					btnColor.setBackground(color);
+				}
+			}
+		});
+		pnlCenter.add(btnColor, "cell 1 1,alignx center");
 
-	lblInnerColor = new JLabel("Inner color:");
-	pnlCenter.add(lblInnerColor, "cell 0 2,alignx left");
+		lblInnerColor = new JLabel("Inner color:");
+		pnlCenter.add(lblInnerColor, "cell 0 2,alignx left");
 
-	btnInnerColor = new JButton("Color");
-	btnInnerColor.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseClicked(MouseEvent e) {
-		innerColor = JColorChooser.showDialog(null, "SELECT CIRCLE COLOR", innerColor);
-		if (innerColor != null) {
-		    btnInnerColor.setBackground(innerColor);
-		}
-	    }
-	});
-	pnlCenter.add(btnInnerColor, "cell 1 2,alignx center");
+		btnInnerColor = new JButton("Color");
+		btnInnerColor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				innerColor = JColorChooser.showDialog(null, "SELECT CIRCLE COLOR", innerColor);
+				if (innerColor != null) {
+					btnInnerColor.setBackground(innerColor);
+				}
+			}
+		});
+		pnlCenter.add(btnInnerColor, "cell 1 2,alignx center");
 
-	pnlBottom = new JPanel();
-	getContentPane().add(pnlBottom, BorderLayout.SOUTH);
+		pnlBottom = new JPanel();
+		getContentPane().add(pnlBottom, BorderLayout.SOUTH);
 
-	btnConfirm = new JButton("Confirm");
-	btnConfirm.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseClicked(MouseEvent e) {
-		try {
-		    if (txtRadius.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
-				JOptionPane.ERROR_MESSAGE, null);
-			confirmed = false;
-		    }
-		} catch (NumberFormatException exc) {
-		    JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",
-			    JOptionPane.ERROR_MESSAGE, null);
-		    return;
-		}
-		confirmed = true;
-		dispose();
-	    }
-	});
-	pnlBottom.add(btnConfirm);
-	getRootPane().setDefaultButton(btnConfirm);
+		btnConfirm = new JButton("Confirm");
+		btnConfirm.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					if (txtRadius.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+					}
+				} catch (NumberFormatException exc) {
+					JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",
+							JOptionPane.ERROR_MESSAGE, null);
+					return;
+				}
+				confirmed = true;
+				dispose();
+			}
+		});
+		pnlBottom.add(btnConfirm);
+		getRootPane().setDefaultButton(btnConfirm);
 
 //		null pointer exception
-	btnCancel = new JButton("Cancel");
-	btnCancel.addMouseListener(new MouseAdapter() {
-	    @Override
-	    public void mouseClicked(MouseEvent e) {
-		confirmed = false;
-		dispose();
-	    }
-	});
-	pnlBottom.add(btnCancel);
-    }
+		btnCancel = new JButton("Cancel");
+		btnCancel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				confirmed = false;
+				dispose();
+			}
+		});
+		pnlBottom.add(btnCancel);
+	}
 
 }
