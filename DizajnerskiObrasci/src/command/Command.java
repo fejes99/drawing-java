@@ -2,7 +2,7 @@ package command;
 
 public interface Command {
 
-    void execute();
+	void execute();
 
-    void unexecute();
+	void unexecute();
 }

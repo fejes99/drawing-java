@@ -7,7 +7,7 @@ public class Rectangle extends SurfaceShape {
 
 	private int width;
 	private int height;
-	private Point upperLeftPoint;
+	private Point upperLeftPoint = new Point();
 
 	public int getWidth() {
 		return width;
@@ -129,7 +129,9 @@ public class Rectangle extends SurfaceShape {
 	}
 
 	public String toString() {
-		return "Upper left point = " + upperLeftPoint + ", height = " + height + ", width = " + width;
+		return "Rectangle: (" + upperLeftPoint.getX() + ", " + upperLeftPoint.getY() + "), " + "Width=" + width
+				+ ",Height=" + height + ", Edge Color: (" + Integer.toString(getColor().getRGB()) + ")"
+				+ ", Inner Color: (" + Integer.toString(getInnerColor().getRGB()) + ")";
 	}
 
 	@Override

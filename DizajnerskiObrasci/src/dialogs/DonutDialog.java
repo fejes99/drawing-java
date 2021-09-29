@@ -26,14 +26,18 @@ public class DonutDialog extends JDialog {
 	private JPanel pnlBottom;
 	private JButton btnConfirm;
 	private JButton btnCancel;
-	private JLabel lblRadius;
-	private JLabel lblInnerRadius;
-	private JTextField txtRadius;
-	private JTextField txtInnerRadius;
-	private JLabel lblColor;
-	private JLabel lblInnerColor;
 	private JButton btnColor;
 	private JButton btnInnerColor;
+	private JLabel lblRadius;
+	private JLabel lblInnerRadius;
+	private JLabel lblColor;
+	private JLabel lblInnerColor;
+	private JLabel lblCenterX;
+	private JLabel lblCenterY;
+	private JTextField txtRadius;
+	private JTextField txtInnerRadius;
+	private JTextField txtCenterX;
+	private JTextField txtCenterY;
 
 	public Boolean isConfirmed() {
 		return confirmed;
@@ -75,9 +79,25 @@ public class DonutDialog extends JDialog {
 		this.txtInnerRadius = txtInnerCircleRadius;
 	}
 
-	public DonutDialog() {
+	public JTextField getTxtCenterX() {
+		return txtCenterX;
+	}
 
-		setTitle("Create donut");
+	public void setTxtCenterX(JTextField txtCenterX) {
+		this.txtCenterX = txtCenterX;
+	}
+
+	public JTextField getTxtCenterY() {
+		return txtCenterY;
+	}
+
+	public void setTxtCenterY(JTextField txtCenterY) {
+		this.txtCenterY = txtCenterY;
+	}
+
+	public DonutDialog(String type) {
+
+		setTitle(type + " donut");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setModal(true);
@@ -85,10 +105,24 @@ public class DonutDialog extends JDialog {
 
 		pnlCenter = new JPanel();
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
-		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][][][]"));
+		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]"));
+
+		lblCenterX = new JLabel("X:");
+		pnlCenter.add(lblCenterX, "cell 0 0,alignx trailing");
+
+		txtCenterX = new JTextField();
+		pnlCenter.add(txtCenterX, "cell 1 0,growx");
+		txtCenterX.setColumns(10);
+
+		lblCenterY = new JLabel("Y:");
+		pnlCenter.add(lblCenterY, "cell 0 1,alignx trailing");
+
+		txtCenterY = new JTextField();
+		pnlCenter.add(txtCenterY, "cell 1 1,growx");
+		txtCenterY.setColumns(10);
 
 		lblRadius = new JLabel("Radius:");
-		pnlCenter.add(lblRadius, "cell 0 0,alignx left");
+		pnlCenter.add(lblRadius, "cell 0 2,alignx left");
 
 		txtRadius = new JTextField();
 		txtRadius.addKeyListener(new KeyAdapter() {
@@ -101,11 +135,11 @@ public class DonutDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtRadius, "cell 1 0,growx");
+		pnlCenter.add(txtRadius, "cell 1 2,growx");
 		txtRadius.setColumns(10);
 
 		lblInnerRadius = new JLabel("Inner radius:");
-		pnlCenter.add(lblInnerRadius, "cell 0 1,alignx left");
+		pnlCenter.add(lblInnerRadius, "cell 0 3,alignx left");
 
 		txtInnerRadius = new JTextField();
 		txtInnerRadius.addKeyListener(new KeyAdapter() {
@@ -118,11 +152,11 @@ public class DonutDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtInnerRadius, "cell 1 1,growx");
+		pnlCenter.add(txtInnerRadius, "cell 1 3,growx");
 		txtInnerRadius.setColumns(10);
 
 		lblColor = new JLabel("Color:");
-		pnlCenter.add(lblColor, "cell 0 2");
+		pnlCenter.add(lblColor, "cell 0 4");
 
 		btnColor = new JButton("Color");
 		btnColor.addMouseListener(new MouseAdapter() {
@@ -131,10 +165,10 @@ public class DonutDialog extends JDialog {
 				color = JColorChooser.showDialog(null, "Outer circle border color:", Color.RED);
 			}
 		});
-		pnlCenter.add(btnColor, "cell 1 2,alignx center");
+		pnlCenter.add(btnColor, "cell 1 4,alignx center");
 
 		lblInnerColor = new JLabel("Inner color:");
-		pnlCenter.add(lblInnerColor, "cell 0 3");
+		pnlCenter.add(lblInnerColor, "cell 0 5");
 
 		btnInnerColor = new JButton("Color");
 		btnInnerColor.addMouseListener(new MouseAdapter() {
@@ -143,7 +177,7 @@ public class DonutDialog extends JDialog {
 				innerColor = JColorChooser.showDialog(null, "Outer circle fulness color:", Color.WHITE);
 			}
 		});
-		pnlCenter.add(btnInnerColor, "cell 1 3,alignx center");
+		pnlCenter.add(btnInnerColor, "cell 1 5,alignx center");
 
 		pnlBottom = new JPanel();
 		getContentPane().add(pnlBottom, BorderLayout.SOUTH);

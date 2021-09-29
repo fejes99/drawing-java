@@ -28,8 +28,12 @@ public class RectangleDialog extends JDialog {
 	private JLabel lblHeight;
 	private JLabel lblBorderColor;
 	private JLabel lblInnerColor;
+	private JLabel lblStartPointX;
+	private JLabel lblStartPointY;
 	private JTextField txtWidth;
 	private JTextField txtHeight;
+	private JTextField txtStartPointX;
+	private JTextField txtStartPointY;
 	private JButton btnBorderColor;
 	private JButton btnInnerColor;
 	private JButton btnConfirm;
@@ -75,9 +79,41 @@ public class RectangleDialog extends JDialog {
 		this.txtHeight = txtHeight;
 	}
 
-	public RectangleDialog() {
+	public JTextField getTxtStartPointY() {
+		return txtStartPointY;
+	}
 
-		setTitle("Create rectangle");
+	public void setTxtStartPointY(JTextField txtStartPointY) {
+		this.txtStartPointY = txtStartPointY;
+	}
+
+	public JLabel getLblStartPointY() {
+		return lblStartPointY;
+	}
+
+	public void setLblStartPointY(JLabel lblStartPointY) {
+		this.lblStartPointY = lblStartPointY;
+	}
+
+	public JTextField getTxtStartPointX() {
+		return txtStartPointX;
+	}
+
+	public void setTxtStartPointX(JTextField txtStartPointX) {
+		this.txtStartPointX = txtStartPointX;
+	}
+
+	public JLabel getLblStartPointX() {
+		return lblStartPointX;
+	}
+
+	public void setLblStartPointX(JLabel lblStartPointX) {
+		this.lblStartPointX = lblStartPointX;
+	}
+
+	public RectangleDialog(String type) {
+
+		setTitle(type + " rectangle");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setModal(true);
@@ -85,10 +121,24 @@ public class RectangleDialog extends JDialog {
 
 		pnlCenter = new JPanel();
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
-		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][]"));
+		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][][][]"));
+
+		lblStartPointX = new JLabel("X:");
+		pnlCenter.add(lblStartPointX, "cell 0 0,alignx trailing");
+
+		txtStartPointX = new JTextField();
+		pnlCenter.add(txtStartPointX, "cell 1 0,growx");
+		txtStartPointX.setColumns(10);
+
+		lblStartPointY = new JLabel("Y:");
+		pnlCenter.add(lblStartPointY, "cell 0 1,alignx trailing");
+
+		txtStartPointY = new JTextField();
+		pnlCenter.add(txtStartPointY, "cell 1 1,growx");
+		txtStartPointY.setColumns(10);
 
 		lblWidth = new JLabel("Width:");
-		pnlCenter.add(lblWidth, "cell 0 0,alignx trailing");
+		pnlCenter.add(lblWidth, "cell 0 2,alignx trailing");
 
 		txtWidth = new JTextField();
 		txtWidth.addKeyListener(new KeyAdapter() {
@@ -101,11 +151,11 @@ public class RectangleDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtWidth, "cell 1 0,growx");
+		pnlCenter.add(txtWidth, "cell 1 2,growx");
 		txtWidth.setColumns(10);
 
 		lblHeight = new JLabel("Height:");
-		pnlCenter.add(lblHeight, "cell 0 1,alignx trailing");
+		pnlCenter.add(lblHeight, "cell 0 3,alignx trailing");
 
 		txtHeight = new JTextField();
 		txtHeight.addKeyListener(new KeyAdapter() {
@@ -119,11 +169,11 @@ public class RectangleDialog extends JDialog {
 			}
 		});
 
-		pnlCenter.add(txtHeight, "cell 1 1,growx");
+		pnlCenter.add(txtHeight, "cell 1 3,growx");
 		txtHeight.setColumns(10);
 
 		lblBorderColor = new JLabel("Border color:");
-		pnlCenter.add(lblBorderColor, "cell 0 2");
+		pnlCenter.add(lblBorderColor, "cell 0 4");
 
 		btnBorderColor = new JButton("Border Color");
 		btnBorderColor.addMouseListener(new MouseAdapter() {
@@ -132,10 +182,10 @@ public class RectangleDialog extends JDialog {
 				color = JColorChooser.showDialog(null, "Border Color:", color.GREEN);
 			}
 		});
-		pnlCenter.add(btnBorderColor, "cell 1 2");
+		pnlCenter.add(btnBorderColor, "cell 1 4");
 
 		lblInnerColor = new JLabel("Inner color:");
-		pnlCenter.add(lblInnerColor, "cell 0 3");
+		pnlCenter.add(lblInnerColor, "cell 0 5");
 
 		btnInnerColor = new JButton("Inner Color");
 		btnInnerColor.addMouseListener(new MouseAdapter() {
@@ -145,7 +195,7 @@ public class RectangleDialog extends JDialog {
 				innerColor = JColorChooser.showDialog(null, "Inner Color:", color.WHITE);
 			}
 		});
-		pnlCenter.add(btnInnerColor, "cell 1 3");
+		pnlCenter.add(btnInnerColor, "cell 1 5");
 
 		pnlBottom = new JPanel();
 		getContentPane().add(pnlBottom, BorderLayout.SOUTH);
@@ -155,7 +205,7 @@ public class RectangleDialog extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				confirmed = true;
-				dispose();
+				setVisible(false);
 			}
 		});
 		pnlBottom.add(btnConfirm);

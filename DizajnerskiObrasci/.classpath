@@ -6,8 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/davidfejes/Downloads/jar_files/miglayout-core-5.2.jar"/>
-	<classpathentry kind="lib" path="/Users/davidfejes/Downloads/jar_files/miglayout-swing-5.2.jar"/>
+	<classpathentry kind="lib" path="/Users/davidfejes/git/IT70-2017-David-Fejes/DizajnerskiObrasci/src/miglayout-core-5.2.jar"/>
+	<classpathentry kind="lib" path="/Users/davidfejes/git/IT70-2017-David-Fejes/DizajnerskiObrasci/src/miglayout-swing-5.2.jar"/>
 	<classpathentry kind="lib" path="/Users/davidfejes/git/IT70-2017-David-Fejes/DizajnerskiObrasci/src/heksagon.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

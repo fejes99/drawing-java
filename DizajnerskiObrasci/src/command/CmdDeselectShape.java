@@ -24,4 +24,8 @@ public class CmdDeselectShape implements Command {
 		shape.setSelected(true);
 		controller.getSelectedShapes().add(shape);
 	}
+
+	public String toString() {
+		return "Deselected - " + this.shape + "\n";
+	}
 }

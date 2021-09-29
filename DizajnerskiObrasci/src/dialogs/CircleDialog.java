@@ -25,14 +25,18 @@ public class CircleDialog extends JDialog {
 
 	private JPanel pnlCenter;
 	private JPanel pnlBottom;
+	private JButton btnColor;
+	private JButton btnInnerColor;
 	private JButton btnConfirm;
 	private JButton btnCancel;
 	private JLabel lblRadius;
-	private JTextField txtRadius;
 	private JLabel lblColor;
-	private JButton btnColor;
 	private JLabel lblInnerColor;
-	private JButton btnInnerColor;
+	private JLabel lblCenterX;
+	private JLabel lblCenterY;
+	private JTextField txtRadius;
+	private JTextField txtCenterX;
+	private JTextField txtCenterY;
 
 	public Color getColor() {
 		return color;
@@ -66,9 +70,25 @@ public class CircleDialog extends JDialog {
 		this.txtRadius = txtRadius;
 	}
 
-	public CircleDialog() {
+	public JTextField getTxtCenterX() {
+		return txtCenterX;
+	}
 
-		setTitle("Create circle");
+	public void setTxtCenterX(JTextField txtCenterX) {
+		this.txtCenterX = txtCenterX;
+	}
+
+	public JTextField getTxtCenterY() {
+		return txtCenterY;
+	}
+
+	public void setTxtCenterY(JTextField txtCenterY) {
+		this.txtCenterY = txtCenterY;
+	}
+
+	public CircleDialog(String type) {
+
+		setTitle(type + " circle");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setModal(true);
@@ -76,10 +96,24 @@ public class CircleDialog extends JDialog {
 
 		pnlCenter = new JPanel();
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
-		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][][]"));
+
+		lblCenterX = new JLabel("X:");
+		pnlCenter.add(lblCenterX, "cell 0 0,alignx trailing");
+
+		txtCenterX = new JTextField();
+		pnlCenter.add(txtCenterX, "cell 1 0,growx");
+		txtCenterX.setColumns(10);
+
+		lblCenterY = new JLabel("Y:");
+		pnlCenter.add(lblCenterY, "cell 0 1,alignx trailing");
+
+		txtCenterY = new JTextField();
+		pnlCenter.add(txtCenterY, "cell 1 1,growx");
+		txtCenterY.setColumns(10);
 
 		lblRadius = new JLabel("Radius:");
-		pnlCenter.add(lblRadius, "cell 0 0,alignx left");
+		pnlCenter.add(lblRadius, "cell 0 2,alignx left");
 
 		txtRadius = new JTextField();
 		txtRadius.addKeyListener(new KeyAdapter() {
@@ -92,11 +126,11 @@ public class CircleDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtRadius, "cell 1 0,growx");
+		pnlCenter.add(txtRadius, "cell 1 2,growx");
 		txtRadius.setColumns(10);
 
 		lblColor = new JLabel("Border color:");
-		pnlCenter.add(lblColor, "cell 0 1,alignx left");
+		pnlCenter.add(lblColor, "cell 0 3,alignx left");
 
 		btnColor = new JButton("Color");
 		btnColor.addMouseListener(new MouseAdapter() {
@@ -108,10 +142,10 @@ public class CircleDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(btnColor, "cell 1 1,alignx center");
+		pnlCenter.add(btnColor, "cell 1 3,alignx center");
 
 		lblInnerColor = new JLabel("Inner color:");
-		pnlCenter.add(lblInnerColor, "cell 0 2,alignx left");
+		pnlCenter.add(lblInnerColor, "cell 0 4,alignx left");
 
 		btnInnerColor = new JButton("Color");
 		btnInnerColor.addMouseListener(new MouseAdapter() {
@@ -123,7 +157,7 @@ public class CircleDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(btnInnerColor, "cell 1 2,alignx center");
+		pnlCenter.add(btnInnerColor, "cell 1 4,alignx center");
 
 		pnlBottom = new JPanel();
 		getContentPane().add(pnlBottom, BorderLayout.SOUTH);

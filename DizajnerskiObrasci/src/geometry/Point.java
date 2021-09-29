@@ -85,7 +85,7 @@ public class Point extends Shape {
 	}
 
 	public String toString() {
-		return "(" + x + ", " + y + ")";
+		return "Point: (" + x + ", " + y + "), " + "Color: (" + Integer.toString(getColor().getRGB()) + ")";
 	}
 
 	@Override
@@ -110,5 +110,4 @@ public class Point extends Shape {
 
 		return p;
 	}
-
 }

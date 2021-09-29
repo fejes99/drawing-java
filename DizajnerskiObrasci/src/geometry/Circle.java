@@ -112,7 +112,10 @@ public class Circle extends SurfaceShape {
 	}
 
 	public String toString() {
-		return "Center = " + center + ", radius = " + radius;
+		return "Circle: (" + this.center.getX() + ", " + this.center.getY() + "), " + "Radius=" + this.radius
+				+ ", Edge Color: (" + Integer.toString(getColor().getRGB()) + ")" + ", Inner Color: ("
+				+ Integer.toString(getInnerColor().getRGB()) + ")";
+
 	}
 
 	@Override

@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 public class Line extends Shape {
 
-	private Point startPoint;
-	private Point endPoint;
+	private Point startPoint = new Point();
+	private Point endPoint = new Point();
 
 	public Point getStartPoint() {
 		return startPoint;
@@ -95,7 +95,8 @@ public class Line extends Shape {
 	}
 
 	public String toString() {
-		return startPoint + "-->" + endPoint;
+		return "Line: " + "(" + startPoint.getX() + ", " + startPoint.getY() + ") (" + endPoint.getX() + ", "
+				+ endPoint.getY() + "), " + "Color: (" + Integer.toString(getColor().getRGB()) + ")";
 	}
 
 	@Override

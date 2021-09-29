@@ -22,6 +22,16 @@ public class HexagonAdapter extends SurfaceShape {
 		hexagon.setSelected(true);
 	}
 
+	@Override
+	public boolean isSelected() {
+		return hexagon.isSelected();
+	}
+
+	@Override
+	public void setSelected(boolean selected) {
+		this.hexagon.setSelected(selected);
+	}
+
 	public Point getHexagonCenter() {
 		return new Point(this.hexagon.getX(), this.hexagon.getY());
 	}
@@ -138,14 +148,19 @@ public class HexagonAdapter extends SurfaceShape {
 
 	}
 
-	@Override
-	public boolean isSelected() {
-		return hexagon.isSelected();
+	public HexagonAdapter clone(HexagonAdapter hexagon) {
+		hexagon.setHexagonCenter(this.getHexagonCenter());
+		hexagon.setHexagonRadius(this.getHexagonRadius());
+		hexagon.setHexagonBorderColor(this.getHexagonBorderColor());
+		hexagon.setHexagonInnerColor(this.getHexagonInnerColor());
+
+		return hexagon;
 	}
 
-	@Override
-	public void setSelected(boolean selected) {
-		this.hexagon.setSelected(selected);
+	public String toString() {
+		return "Hexagon: (" + getHexagonCenter().getX() + ", " + getHexagonCenter().getY() + "), " + "Radius="
+				+ getHexagonRadius() + ", Edge Color: (" + Integer.toString(getHexagonBorderColor().getRGB()) + ")"
+				+ ", Inner Color: (" + Integer.toString(getHexagonInnerColor().getRGB()) + ")";
 	}
 
 }

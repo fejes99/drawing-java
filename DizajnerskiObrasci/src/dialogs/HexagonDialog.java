@@ -24,14 +24,18 @@ public class HexagonDialog extends JDialog {
 
 	private JPanel pnlCenter;
 	private JPanel pnlBottom;
-	private JLabel lblRadius;
-	private JLabel lblColor;
-	private JLabel lblInnerColor;
-	private JTextField txtRadius;
 	private JButton btnColor;
 	private JButton btnInnerColor;
 	private JButton btnConfirm;
 	private JButton btnCancel;
+	private JLabel lblCenterY;
+	private JLabel lblCenterX;
+	private JLabel lblRadius;
+	private JLabel lblColor;
+	private JLabel lblInnerColor;
+	private JTextField txtRadius;
+	private JTextField txtCenterY;
+	private JTextField txtCenterX;
 
 	public Color getColor() {
 		return color;
@@ -65,8 +69,24 @@ public class HexagonDialog extends JDialog {
 		this.txtRadius = txtRadius;
 	}
 
-	public HexagonDialog() {
-		setTitle("Create Hexagon");
+	public JTextField getTxtCenterY() {
+		return txtCenterY;
+	}
+
+	public void setTxtCenterY(JTextField txtCenterY) {
+		this.txtCenterY = txtCenterY;
+	}
+
+	public JTextField getTxtCenterX() {
+		return txtCenterX;
+	}
+
+	public void setTxtCenterX(JTextField txtCenterX) {
+		this.txtCenterX = txtCenterX;
+	}
+
+	public HexagonDialog(String type) {
+		setTitle(type + " Hexagon");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setModal(true);
@@ -74,10 +94,24 @@ public class HexagonDialog extends JDialog {
 
 		pnlCenter = new JPanel();
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
-		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][]"));
+		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][][][][]"));
+
+		lblCenterX = new JLabel("X:");
+		pnlCenter.add(lblCenterX, "cell 0 0,alignx trailing");
+
+		txtCenterX = new JTextField();
+		pnlCenter.add(txtCenterX, "cell 1 0,growx");
+		txtCenterX.setColumns(10);
+
+		lblCenterY = new JLabel("Y:");
+		pnlCenter.add(lblCenterY, "cell 0 1,alignx trailing");
+
+		txtCenterY = new JTextField();
+		pnlCenter.add(txtCenterY, "cell 1 1,growx");
+		txtCenterY.setColumns(10);
 
 		lblRadius = new JLabel("Radius:");
-		pnlCenter.add(lblRadius, "cell 0 0,alignx trailing");
+		pnlCenter.add(lblRadius, "cell 0 2,alignx trailing");
 
 		txtRadius = new JTextField();
 		txtRadius.addKeyListener(new KeyAdapter() {
@@ -90,11 +124,8 @@ public class HexagonDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtRadius, "cell 1 0,growx");
+		pnlCenter.add(txtRadius, "cell 1 2,growx");
 		txtRadius.setColumns(10);
-
-		lblColor = new JLabel("Color:");
-		pnlCenter.add(lblColor, "cell 0 2");
 
 		btnColor = new JButton("Border Color");
 		btnColor.addMouseListener(new MouseAdapter() {
@@ -103,10 +134,10 @@ public class HexagonDialog extends JDialog {
 				color = JColorChooser.showDialog(null, "Border Color:", color.GREEN);
 			}
 		});
-		pnlCenter.add(btnColor, "cell 1 2");
 
-		lblInnerColor = new JLabel("Inner color:");
-		pnlCenter.add(lblInnerColor, "cell 0 3");
+		lblColor = new JLabel("Color:");
+		pnlCenter.add(lblColor, "cell 0 3");
+		pnlCenter.add(btnColor, "cell 1 3");
 
 		btnInnerColor = new JButton("Inner Color");
 		btnInnerColor.addMouseListener(new MouseAdapter() {
@@ -116,7 +147,10 @@ public class HexagonDialog extends JDialog {
 				innerColor = JColorChooser.showDialog(null, "Inner Color:", color.WHITE);
 			}
 		});
-		pnlCenter.add(btnInnerColor, "cell 1 3");
+
+		lblInnerColor = new JLabel("Inner color:");
+		pnlCenter.add(lblInnerColor, "cell 0 4");
+		pnlCenter.add(btnInnerColor, "cell 1 4");
 
 		pnlBottom = new JPanel();
 		getContentPane().add(pnlBottom, BorderLayout.SOUTH);

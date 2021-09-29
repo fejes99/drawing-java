@@ -25,4 +25,8 @@ public class CmdRemoveShape implements Command {
 		this.model.getShapes().add(index, shape);
 	}
 
+	public String toString() {
+		return "Removed - " + this.shape + "\n";
+	}
+
 }
