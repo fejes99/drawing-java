@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,8 +19,8 @@ import net.miginfocom.swing.MigLayout;
 
 public class HexagonDialog extends JDialog {
 
-	private Color color = new Color(0, 0, 0);
-	private Color innerColor = new Color(255, 255, 255);
+	private Color color = null;
+	private Color innerColor = null;
 	private Boolean confirmed;
 
 	private JPanel pnlCenter;
@@ -127,7 +128,7 @@ public class HexagonDialog extends JDialog {
 		pnlCenter.add(txtRadius, "cell 1 2,growx");
 		txtRadius.setColumns(10);
 
-		btnColor = new JButton("Border Color");
+		btnColor = new JButton("Color");
 		btnColor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -139,11 +140,10 @@ public class HexagonDialog extends JDialog {
 		pnlCenter.add(lblColor, "cell 0 3");
 		pnlCenter.add(btnColor, "cell 1 3");
 
-		btnInnerColor = new JButton("Inner Color");
+		btnInnerColor = new JButton("Color");
 		btnInnerColor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				innerColor = JColorChooser.showDialog(null, "Inner Color:", color.WHITE);
 			}
 		});
@@ -159,6 +159,18 @@ public class HexagonDialog extends JDialog {
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					if (txtRadius.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					}
+				} catch (NumberFormatException exc) {
+					JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",
+							JOptionPane.ERROR_MESSAGE, null);
+					return;
+				}
 				confirmed = true;
 				dispose();
 			}

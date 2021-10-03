@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,9 +19,9 @@ import net.miginfocom.swing.MigLayout;
 
 public class DonutDialog extends JDialog {
 
+	private Color color = null;
+	private Color innerColor = null;
 	private Boolean confirmed;
-	private Color color = new Color(0, 0, 0);
-	private Color innerColor = new Color(255, 255, 255);
 
 	private JPanel pnlCenter;
 	private JPanel pnlBottom;
@@ -39,14 +40,6 @@ public class DonutDialog extends JDialog {
 	private JTextField txtCenterX;
 	private JTextField txtCenterY;
 
-	public Boolean isConfirmed() {
-		return confirmed;
-	}
-
-	public void setConfirmed(Boolean confirmed) {
-		this.confirmed = confirmed;
-	}
-
 	public Color getColor() {
 		return color;
 	}
@@ -61,6 +54,14 @@ public class DonutDialog extends JDialog {
 
 	public void setInnerColor(Color innerColor) {
 		this.innerColor = innerColor;
+	}
+
+	public Boolean isConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(Boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 
 	public JTextField getTxtRadius() {
@@ -186,6 +187,33 @@ public class DonutDialog extends JDialog {
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					if (txtCenterX.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtCenterY.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtRadius.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtInnerRadius.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					}
+				} catch (NumberFormatException exc) {
+					JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",
+							JOptionPane.ERROR_MESSAGE, null);
+					return;
+				}
 				confirmed = true;
 				dispose();
 			}

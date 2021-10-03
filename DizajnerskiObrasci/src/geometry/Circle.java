@@ -69,6 +69,7 @@ public class Circle extends SurfaceShape {
 		fill(g);
 
 		if (isSelected()) {
+			g.setColor(Color.BLUE);
 			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
 			g.drawRect(getCenter().getX() + getRadius() - 3, getCenter().getY() - 3, 6, 6);
 			g.drawRect(getCenter().getX() - getRadius() - 3, getCenter().getY() - 3, 6, 6);
@@ -113,7 +114,7 @@ public class Circle extends SurfaceShape {
 
 	public String toString() {
 		return "Circle: (" + this.center.getX() + ", " + this.center.getY() + "), " + "Radius=" + this.radius
-				+ ", Edge Color: (" + Integer.toString(getColor().getRGB()) + ")" + ", Inner Color: ("
+				+ ", Color: (" + Integer.toString(getColor().getRGB()) + ")" + ", Inner Color: ("
 				+ Integer.toString(getInnerColor().getRGB()) + ")";
 
 	}

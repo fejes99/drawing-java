@@ -19,8 +19,8 @@ import net.miginfocom.swing.MigLayout;
 
 public class CircleDialog extends JDialog {
 
-	private Color color = new Color(0, 0, 0);
-	private Color innerColor = new Color(255, 255, 255);
+	private Color color = null;
+	private Color innerColor = null;
 	private Boolean confirmed;
 
 	private JPanel pnlCenter;
@@ -167,10 +167,21 @@ public class CircleDialog extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if (txtRadius.getText().equals("")) {
+					if (txtCenterX.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
 								JOptionPane.ERROR_MESSAGE, null);
 						confirmed = false;
+						return;
+					} else if (txtCenterY.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtRadius.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
 					}
 				} catch (NumberFormatException exc) {
 					JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",

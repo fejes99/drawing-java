@@ -5,13 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,11 +24,18 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class DrawingFrame extends JFrame {
 
+//	private Color color = new Color(0, 0, 0);
+//	private Color innerColor = new Color(255, 255, 255);
+//
+//	private Boolean isCurrentColorOk;
+//	private Boolean isCurrentInnerColorOk;
+
 	private DrawingView view = new DrawingView();
 	private DrawingController controller;
 
 	private JPanel pnlFunctions;
 	private JMenuBar menuBar;
+	private JMenu menuMain;
 	private ButtonGroup shapeBtns;
 	private JToggleButton btnPoint;
 	private JToggleButton btnLine;
@@ -43,7 +54,14 @@ public class DrawingFrame extends JFrame {
 	private JButton btnToBack;
 	private JButton btnBringToBack;
 	private JButton btnBringToFront;
-	private JPanel panel;
+	private JPanel pnlUndoRedo;
+	private JPanel pnlColors;
+	private JButton btnInnerColor;
+	private JButton btnColor;
+	private JMenuItem menuItemSavePainting;
+	private JMenuItem menuItemOpenPainting;
+	private JMenuItem menuItemSaveLog;
+	private JMenuItem menuItemOpenLog;
 
 	public DrawingView getView() {
 		return view;
@@ -73,18 +91,93 @@ public class DrawingFrame extends JFrame {
 		this.btnRedo = btnRedo;
 	}
 
+	public JToggleButton getBtnSelect() {
+		return btnSelect;
+	}
+
+	public void setBtnSelect(JToggleButton btnSelect) {
+		this.btnSelect = btnSelect;
+	}
+
+	public JButton getBtnModify() {
+		return btnModify;
+	}
+
+	public void setBtnModify(JButton btnModify) {
+		this.btnModify = btnModify;
+	}
+
+	public JButton getBtnDelete() {
+		return btnDelete;
+	}
+
+	public void setBtnDelete(JButton btnDelete) {
+		this.btnDelete = btnDelete;
+	}
+
+	public JButton getBtnToFront() {
+		return btnToFront;
+	}
+
+	public void setBtnToFront(JButton btnToFront) {
+		this.btnToFront = btnToFront;
+	}
+
+	public JButton getBtnToBack() {
+		return btnToBack;
+	}
+
+	public void setBtnToBack(JButton btnToBack) {
+		this.btnToBack = btnToBack;
+	}
+
+	public JButton getBtnBringToBack() {
+		return btnBringToBack;
+	}
+
+	public void setBtnBringToBack(JButton btnBringToBack) {
+		this.btnBringToBack = btnBringToBack;
+	}
+
+	public JButton getBtnBringToFront() {
+		return btnBringToFront;
+	}
+
+	public void setBtnBringToFront(JButton btnBringToFront) {
+		this.btnBringToFront = btnBringToFront;
+	}
+
+	public JToggleButton getBtnPoint() {
+		return btnPoint;
+	}
+
+	public JToggleButton getBtnLine() {
+		return btnLine;
+	}
+
+	public JToggleButton getBtnRectangle() {
+		return btnRectangle;
+	}
+
+	public JToggleButton getBtnCircle() {
+		return btnCircle;
+	}
+
+	public JToggleButton getBtnDonut() {
+		return btnDonut;
+	}
+
+	public JToggleButton getBtnHexagon() {
+		return btnHexagon;
+	}
+
 	public DrawingFrame() {
-
-		setBounds(100, 100, 1000, 800);
-
+		setBounds(100, 100, 1216, 800);
 		view.setBackground(Color.WHITE);
 		view.addMouseListener(new MouseAdapter() {
-
 			@Override
 			// refactor this else if with polymorphism if its possible
 			public void mouseClicked(MouseEvent e) {
-				btnPoint.addMouseListener(this);
-
 				try {
 					if (btnPoint.isSelected()) {
 						controller.drawPoint(e);
@@ -111,46 +204,63 @@ public class DrawingFrame extends JFrame {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
+		menuMain = new JMenu("File");
+		menuBar.add(menuMain);
+
+		menuItemSavePainting = new JMenuItem("Save painting");
+		menuItemSavePainting.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.savePainting();
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		});
+		menuMain.add(menuItemSavePainting);
+
+		menuItemOpenPainting = new JMenuItem("Open painting");
+		menuItemOpenPainting.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.openPainting();
+				} catch (ClassNotFoundException cnfe) {
+					cnfe.printStackTrace();
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		});
+		menuMain.add(menuItemOpenPainting);
+
+		menuItemOpenLog = new JMenuItem("Open log");
+		menuItemOpenLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		menuMain.add(menuItemOpenLog);
+
+		menuItemSaveLog = new JMenuItem("Save log");
+		menuItemSaveLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveLog();
+			}
+		});
+		menuMain.add(menuItemSaveLog);
+
 		shapeBtns = new ButtonGroup();
-
-		btnPoint = new JToggleButton("Point");
-		btnPoint.setToolTipText("Draw point");
-		menuBar.add(btnPoint);
-		shapeBtns.add(btnPoint);
-
-		btnLine = new JToggleButton("Line");
-		btnLine.setToolTipText("Draw line");
-		menuBar.add(btnLine);
-		shapeBtns.add(btnLine);
-
-		btnRectangle = new JToggleButton("Rectangle");
-		btnRectangle.setToolTipText("Draw rectangle");
-		menuBar.add(btnRectangle);
-		shapeBtns.add(btnRectangle);
-
-		btnCircle = new JToggleButton("Circle");
-		btnCircle.setToolTipText("Draw circle");
-		menuBar.add(btnCircle);
-		shapeBtns.add(btnCircle);
-
-		btnDonut = new JToggleButton("Donut");
-		btnDonut.setToolTipText("Draw donut");
-		menuBar.add(btnDonut);
-		shapeBtns.add(btnDonut);
-
-		btnHexagon = new JToggleButton("Hexagon");
-		btnHexagon.setToolTipText("Draw hexagon");
-		menuBar.add(btnHexagon);
-		shapeBtns.add(btnHexagon);
 
 		pnlFunctions = new JPanel();
 
 		btnSelect = new JToggleButton("Select");
 		btnSelect.setToolTipText("Select shape");
+		btnSelect.setEnabled(false);
 		pnlFunctions.add(btnSelect);
 		shapeBtns.add(btnSelect);
 
 		btnModify = new JButton("Modify");
+		btnModify.setEnabled(false);
 		btnModify.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -160,6 +270,7 @@ public class DrawingFrame extends JFrame {
 		pnlFunctions.add(btnModify);
 
 		btnDelete = new JButton("Delete");
+		btnDelete.setEnabled(false);
 		btnDelete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -172,37 +283,103 @@ public class DrawingFrame extends JFrame {
 
 		JPanel pnlLocation = new JPanel();
 
-		panel = new JPanel();
+		pnlUndoRedo = new JPanel();
+
+		pnlColors = new JPanel();
+
+		JPanel pnlShapes = new JPanel();
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+		groupLayout
+				.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+												.addComponent(pnlLog, GroupLayout.DEFAULT_SIZE, 1204, Short.MAX_VALUE))
+										.addComponent(view, GroupLayout.DEFAULT_SIZE, 1210, Short.MAX_VALUE)
+										.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+												.addComponent(pnlFunctions, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(pnlUndoRedo, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(pnlLocation, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED).addComponent(pnlColors,
+														GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(
+												pnlShapes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)))
+								.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
 				.createSequentialGroup()
+				.addComponent(
+						pnlShapes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(2)
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(pnlLog,
-								GroupLayout.DEFAULT_SIZE, 1181, Short.MAX_VALUE))
-						.addComponent(view, GroupLayout.DEFAULT_SIZE, 1187, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-								.addComponent(pnlFunctions, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(pnlLocation,
-										GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)))
-				.addGap(0)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addGap(12)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(pnlFunctions, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-								.addComponent(pnlLocation, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(view, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(pnlLog, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)));
+						.addComponent(pnlColors, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(pnlFunctions, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addComponent(pnlUndoRedo, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+								.addComponent(pnlLocation, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(view, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(pnlLog, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)));
+
+		btnPoint = new JToggleButton("Point");
+		pnlShapes.add(btnPoint);
+		btnPoint.setToolTipText("Draw point");
+		shapeBtns.add(btnPoint);
+
+		btnLine = new JToggleButton("Line");
+		pnlShapes.add(btnLine);
+		btnLine.setToolTipText("Draw line");
+		shapeBtns.add(btnLine);
+
+		btnRectangle = new JToggleButton("Rectangle");
+		pnlShapes.add(btnRectangle);
+		btnRectangle.setToolTipText("Draw rectangle");
+		shapeBtns.add(btnRectangle);
+
+		btnCircle = new JToggleButton("Circle");
+		pnlShapes.add(btnCircle);
+		btnCircle.setToolTipText("Draw circle");
+		shapeBtns.add(btnCircle);
+
+		btnDonut = new JToggleButton("Donut");
+		pnlShapes.add(btnDonut);
+		btnDonut.setToolTipText("Draw donut");
+		shapeBtns.add(btnDonut);
+
+		btnHexagon = new JToggleButton("Hexagon");
+		pnlShapes.add(btnHexagon);
+		btnHexagon.setToolTipText("Draw hexagon");
+		shapeBtns.add(btnHexagon);
+
+		btnColor = new JButton("Color");
+		btnColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Color temp = JColorChooser.showDialog(null, "Choose color", Color.RED);
+				controller.setColor(temp);
+			}
+		});
+		pnlColors.add(btnColor);
+
+		btnInnerColor = new JButton("Inner Color");
+		btnInnerColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Color temp = JColorChooser.showDialog(null, "Choose color", Color.RED);
+				controller.setInnerColor(temp);
+			}
+		});
+		pnlColors.add(btnInnerColor);
 
 		btnUndo = new JButton("Undo");
-		panel.add(btnUndo);
+		pnlUndoRedo.add(btnUndo);
 		btnUndo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.undo();
@@ -211,7 +388,7 @@ public class DrawingFrame extends JFrame {
 		btnUndo.setEnabled(false);
 
 		btnRedo = new JButton("Redo");
-		panel.add(btnRedo);
+		pnlUndoRedo.add(btnRedo);
 		btnRedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.redo();
@@ -220,6 +397,7 @@ public class DrawingFrame extends JFrame {
 		btnRedo.setEnabled(false);
 
 		btnToBack = new JButton("To Back");
+		btnToBack.setEnabled(false);
 		btnToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.toBack();
@@ -228,6 +406,7 @@ public class DrawingFrame extends JFrame {
 		pnlLocation.add(btnToBack);
 
 		btnToFront = new JButton("To Front");
+		btnToFront.setEnabled(false);
 		btnToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.toFront();
@@ -236,6 +415,7 @@ public class DrawingFrame extends JFrame {
 		pnlLocation.add(btnToFront);
 
 		btnBringToBack = new JButton("Bring to Back");
+		btnBringToBack.setEnabled(false);
 		btnBringToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToBack();
@@ -244,6 +424,7 @@ public class DrawingFrame extends JFrame {
 		pnlLocation.add(btnBringToBack);
 
 		btnBringToFront = new JButton("Bring to Front");
+		btnBringToFront.setEnabled(false);
 		btnBringToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToFront();

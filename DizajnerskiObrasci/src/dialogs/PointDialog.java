@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,7 +19,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class PointDialog extends JDialog {
 
-	private Color color = new Color(0, 0, 0);;
+	private Color color = null;
 	private Boolean confirmed;
 
 	private JPanel pnlCenter;
@@ -133,13 +134,29 @@ public class PointDialog extends JDialog {
 
 		pnlBottom = new JPanel();
 		getContentPane().add(pnlBottom, BorderLayout.SOUTH);
-
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					if (txtPointX.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtPointY.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					}
+				} catch (NumberFormatException exc) {
+					JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",
+							JOptionPane.ERROR_MESSAGE, null);
+					return;
+				}
 				confirmed = true;
-				dispose();
+				setVisible(false);
 			}
 		});
 		pnlBottom.add(btnConfirm);

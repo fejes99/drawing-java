@@ -159,7 +159,7 @@ public class HexagonAdapter extends SurfaceShape {
 
 	public String toString() {
 		return "Hexagon: (" + getHexagonCenter().getX() + ", " + getHexagonCenter().getY() + "), " + "Radius="
-				+ getHexagonRadius() + ", Edge Color: (" + Integer.toString(getHexagonBorderColor().getRGB()) + ")"
+				+ getHexagonRadius() + ", Color: (" + Integer.toString(getHexagonBorderColor().getRGB()) + ")"
 				+ ", Inner Color: (" + Integer.toString(getHexagonInnerColor().getRGB()) + ")";
 	}
 

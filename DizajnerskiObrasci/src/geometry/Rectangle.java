@@ -130,8 +130,8 @@ public class Rectangle extends SurfaceShape {
 
 	public String toString() {
 		return "Rectangle: (" + upperLeftPoint.getX() + ", " + upperLeftPoint.getY() + "), " + "Width=" + width
-				+ ",Height=" + height + ", Edge Color: (" + Integer.toString(getColor().getRGB()) + ")"
-				+ ", Inner Color: (" + Integer.toString(getInnerColor().getRGB()) + ")";
+				+ ",Height=" + height + ", Color: (" + Integer.toString(getColor().getRGB()) + ")" + ", Inner Color: ("
+				+ Integer.toString(getInnerColor().getRGB()) + ")";
 	}
 
 	@Override

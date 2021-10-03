@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,7 +19,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class LineDialog extends JDialog {
 
-	private Color color = new Color(0, 0, 0);;
+	private Color color = null;
 	private Boolean confirmed;
 
 	private JPanel pnlCenter;
@@ -130,8 +131,6 @@ public class LineDialog extends JDialog {
 		pnlCenter.add(txtStartPointY, "cell 1 1,growx");
 		txtStartPointY.setColumns(10);
 
-/////////////
-
 		lblEndPointX = new JLabel("End X:");
 		pnlCenter.add(lblEndPointX, "cell 0 2,alignx left");
 
@@ -185,6 +184,33 @@ public class LineDialog extends JDialog {
 		btnConfirm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					if (txtStartPointX.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtStartPointY.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtEndPointX.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					} else if (txtEndPointY.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please enter radius value", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
+					}
+				} catch (NumberFormatException exc) {
+					JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",
+							JOptionPane.ERROR_MESSAGE, null);
+					return;
+				}
 				confirmed = true;
 				dispose();
 			}
