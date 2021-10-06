@@ -172,7 +172,7 @@ public class HexagonDialog extends JDialog {
 					return;
 				}
 				confirmed = true;
-				dispose();
+				setVisible(false);
 			}
 		});
 		pnlBottom.add(btnConfirm);
@@ -183,6 +183,7 @@ public class HexagonDialog extends JDialog {
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				confirmed = false;
 				dispose();
 			}
 		});

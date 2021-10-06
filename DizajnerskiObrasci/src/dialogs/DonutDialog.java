@@ -208,6 +208,11 @@ public class DonutDialog extends JDialog {
 								JOptionPane.ERROR_MESSAGE, null);
 						confirmed = false;
 						return;
+					} else if (Integer.parseInt(txtRadius.getText()) <= Integer.parseInt(txtInnerRadius.getText())) {
+						JOptionPane.showMessageDialog(null, "Radius must be greather than inner radius", "ERROR",
+								JOptionPane.ERROR_MESSAGE, null);
+						confirmed = false;
+						return;
 					}
 				} catch (NumberFormatException exc) {
 					JOptionPane.showMessageDialog(null, "Invalid data type inserted!", "ERROR",
@@ -215,7 +220,7 @@ public class DonutDialog extends JDialog {
 					return;
 				}
 				confirmed = true;
-				dispose();
+				setVisible(false);
 			}
 		});
 		pnlBottom.add(btnConfirm);
@@ -226,6 +231,7 @@ public class DonutDialog extends JDialog {
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				confirmed = false;
 				dispose();
 			}
 		});

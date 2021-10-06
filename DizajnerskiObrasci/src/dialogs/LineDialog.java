@@ -212,7 +212,7 @@ public class LineDialog extends JDialog {
 					return;
 				}
 				confirmed = true;
-				dispose();
+				setVisible(false);
 			}
 		});
 		pnlBottom.add(btnConfirm);

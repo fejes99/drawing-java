@@ -37,29 +37,25 @@ public class Rectangle extends SurfaceShape {
 
 	}
 
-	public Rectangle(Point upperLeftPoint, int height, int width) {
+	public Rectangle(Point upperLeftPoint, int width, int height) {
 		this.upperLeftPoint = upperLeftPoint;
-		setHeight(height);
-		setWidth(width);
+		this.width = width;
+		this.height = height;
 	}
 
-	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected) {
-		this(upperLeftPoint, height, width);
+	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected) {
+		this(upperLeftPoint, width, height);
 		setSelected(selected);
 	}
 
-	public Rectangle(Point upperLeftPoint, int height, int width, Color color) {
-		this(upperLeftPoint, height, width);
-		setColor(color);
-	}
-
-	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected, Color color) {
-		this(upperLeftPoint, height, width, selected);
+	public Rectangle(Point upperLeftPoint, int width, int height, boolean selected, Color color) {
+		this(upperLeftPoint, width, height, selected);
 		setColor(color);
 	}
 
 	public Rectangle(Point upperLeftPoint, int width, int height, Color color, Color innerColor) {
-		this(upperLeftPoint, width, height, color);
+		this(upperLeftPoint, width, height);
+		setColor(color);
 		setInnerColor(innerColor);
 	}
 
@@ -130,7 +126,7 @@ public class Rectangle extends SurfaceShape {
 
 	public String toString() {
 		return "Rectangle: (" + upperLeftPoint.getX() + ", " + upperLeftPoint.getY() + "), " + "Width=" + width
-				+ ",Height=" + height + ", Color: (" + Integer.toString(getColor().getRGB()) + ")" + ", Inner Color: ("
+				+ ", Height=" + height + ", Color: (" + Integer.toString(getColor().getRGB()) + ")" + ", Inner Color: ("
 				+ Integer.toString(getInnerColor().getRGB()) + ")";
 	}
 

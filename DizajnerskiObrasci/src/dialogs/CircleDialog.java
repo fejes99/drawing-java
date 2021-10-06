@@ -189,7 +189,7 @@ public class CircleDialog extends JDialog {
 					return;
 				}
 				confirmed = true;
-				dispose();
+				setVisible(false);
 			}
 		});
 		pnlBottom.add(btnConfirm);

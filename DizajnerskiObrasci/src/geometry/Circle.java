@@ -47,6 +47,12 @@ public class Circle extends SurfaceShape {
 		setColor(color);
 	}
 
+	public Circle(Point center, int radius, Color color, Color innerColor) {
+		this(center, radius);
+		setColor(color);
+		setInnerColor(innerColor);
+	}
+
 	public Circle(Point center, int radius, boolean selected, Color color, Color innerColor) {
 		this(center, radius, selected, color);
 		setInnerColor(innerColor);

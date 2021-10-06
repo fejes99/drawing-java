@@ -244,6 +244,7 @@ public class RectangleDialog extends JDialog {
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				confirmed = false;
 				dispose();
 			}
 		});

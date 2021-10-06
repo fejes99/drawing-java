@@ -43,6 +43,12 @@ public class Donut extends Circle {
 		setInnerColor(innerColor);
 	}
 
+	public Donut(Point center, int radius, int innerRadius, Color color, Color innerColor) {
+		this(center, radius, innerRadius);
+		setColor(color);
+		setInnerColor(innerColor);
+	}
+
 	public void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
