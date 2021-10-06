@@ -385,8 +385,9 @@ public class DrawingController {
 			if (dlgPoint.isConfirmed()) {
 				Point newPoint = new Point(Integer.parseInt(dlgPoint.getTxtPointX().getText()),
 						Integer.parseInt(dlgPoint.getTxtPointY().getText()), true);
+				Color oldColor = oldPoint.getColor();
 				if (dlgPoint.getColor() == null) {
-					newPoint.setColor(color);
+					newPoint.setColor(oldColor);
 				} else {
 					newPoint.setColor(dlgPoint.getColor());
 				}
@@ -413,8 +414,9 @@ public class DrawingController {
 				Point newEndPoint = new Point(Integer.parseInt(dlgLine.getTxtEndPointX().getText()),
 						Integer.parseInt(dlgLine.getTxtEndPointY().getText()));
 				Line newLine = new Line(newStartPoint, newEndPoint, true);
+				Color oldColor = oldLine.getColor();
 				if (dlgLine.getColor() == null) {
-					newLine.setColor(color);
+					newLine.setColor(oldColor);
 				} else {
 					newLine.setColor(dlgLine.getColor());
 				}
@@ -441,15 +443,17 @@ public class DrawingController {
 				Rectangle newRectangle = new Rectangle(newStartPoint,
 						Integer.parseInt(dlgRectangle.getTxtWidth().getText()),
 						Integer.parseInt(dlgRectangle.getTxtHeight().getText()), true);
+				Color oldColor = oldRectangle.getColor();
+				Color oldInnerColor = oldRectangle.getInnerColor();
 				if (dlgRectangle.getColor() != null && dlgRectangle.getInnerColor() == null) {
 					newRectangle.setColor(dlgRectangle.getColor());
-					newRectangle.setInnerColor(innerColor);
+					newRectangle.setInnerColor(oldInnerColor);
 				} else if (dlgRectangle.getColor() == null && dlgRectangle.getInnerColor() != null) {
-					newRectangle.setColor(color);
+					newRectangle.setColor(oldColor);
 					newRectangle.setInnerColor(dlgRectangle.getInnerColor());
 				} else if (dlgRectangle.getColor() == null && dlgRectangle.getInnerColor() == null) {
-					newRectangle.setColor(color);
-					newRectangle.setInnerColor(innerColor);
+					newRectangle.setColor(oldColor);
+					newRectangle.setInnerColor(oldInnerColor);
 				} else {
 					newRectangle.setColor(dlgRectangle.getColor());
 					newRectangle.setInnerColor(dlgRectangle.getInnerColor());
@@ -476,15 +480,17 @@ public class DrawingController {
 						Integer.parseInt(dlgDonut.getTxtCenterY().getText()));
 				Donut newDonut = new Donut(newStartPoint, Integer.parseInt(dlgDonut.getTxtRadius().getText()),
 						Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()), true);
+				Color oldColor = oldDonut.getColor();
+				Color oldInnerColor = oldDonut.getInnerColor();
 				if (dlgDonut.getColor() != null && dlgDonut.getInnerColor() == null) {
 					newDonut.setColor(dlgDonut.getColor());
-					newDonut.setInnerColor(innerColor);
+					newDonut.setInnerColor(oldInnerColor);
 				} else if (dlgDonut.getColor() == null && dlgDonut.getInnerColor() != null) {
-					newDonut.setColor(color);
+					newDonut.setColor(oldColor);
 					newDonut.setInnerColor(dlgDonut.getInnerColor());
 				} else if (dlgDonut.getColor() == null && dlgDonut.getInnerColor() == null) {
-					newDonut.setColor(color);
-					newDonut.setInnerColor(innerColor);
+					newDonut.setColor(oldColor);
+					newDonut.setInnerColor(oldInnerColor);
 				} else {
 					newDonut.setColor(dlgDonut.getColor());
 					newDonut.setInnerColor(dlgDonut.getInnerColor());
@@ -510,15 +516,17 @@ public class DrawingController {
 						Integer.parseInt(dlgCircle.getTxtCenterY().getText()));
 				Circle newCircle = new Circle(newStartPoint, Integer.parseInt(dlgCircle.getTxtRadius().getText()),
 						true);
+				Color oldColor = oldCircle.getColor();
+				Color oldInnerColor = oldCircle.getInnerColor();
 				if (dlgCircle.getColor() != null && dlgCircle.getInnerColor() == null) {
 					newCircle.setColor(dlgCircle.getColor());
-					newCircle.setInnerColor(innerColor);
+					newCircle.setInnerColor(oldInnerColor);
 				} else if (dlgCircle.getColor() == null && dlgCircle.getInnerColor() != null) {
-					newCircle.setColor(color);
+					newCircle.setColor(oldColor);
 					newCircle.setInnerColor(dlgCircle.getInnerColor());
 				} else if (dlgCircle.getColor() == null && dlgCircle.getInnerColor() == null) {
-					newCircle.setColor(color);
-					newCircle.setInnerColor(innerColor);
+					newCircle.setColor(oldColor);
+					newCircle.setInnerColor(oldInnerColor);
 				} else {
 					newCircle.setColor(dlgCircle.getColor());
 					newCircle.setInnerColor(dlgCircle.getInnerColor());
@@ -544,15 +552,17 @@ public class DrawingController {
 						Integer.parseInt(dlgHexagon.getTxtCenterY().getText()));
 				HexagonAdapter newHexagon = new HexagonAdapter(newStartPoint,
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()), true);
+				Color oldColor = oldHexagon.getColor();
+				Color oldInnerColor = oldHexagon.getInnerColor();
 				if (dlgHexagon.getColor() != null && dlgHexagon.getInnerColor() == null) {
 					newHexagon.setHexagonBorderColor(dlgHexagon.getColor());
-					newHexagon.setHexagonInnerColor(innerColor);
+					newHexagon.setHexagonInnerColor(oldInnerColor);
 				} else if (dlgHexagon.getColor() == null && dlgHexagon.getInnerColor() != null) {
-					newHexagon.setHexagonBorderColor(color);
+					newHexagon.setHexagonBorderColor(oldColor);
 					newHexagon.setHexagonInnerColor(dlgHexagon.getInnerColor());
 				} else if (dlgHexagon.getColor() == null && dlgHexagon.getInnerColor() == null) {
-					newHexagon.setHexagonBorderColor(color);
-					newHexagon.setHexagonInnerColor(innerColor);
+					newHexagon.setHexagonBorderColor(oldColor);
+					newHexagon.setHexagonInnerColor(oldInnerColor);
 				} else {
 					newHexagon.setHexagonBorderColor(dlgHexagon.getColor());
 					newHexagon.setHexagonInnerColor(dlgHexagon.getInnerColor());
