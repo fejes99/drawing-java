@@ -552,8 +552,8 @@ public class DrawingController {
 						Integer.parseInt(dlgHexagon.getTxtCenterY().getText()));
 				HexagonAdapter newHexagon = new HexagonAdapter(newStartPoint,
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()), true);
-				Color oldColor = oldHexagon.getColor();
-				Color oldInnerColor = oldHexagon.getInnerColor();
+				Color oldColor = oldHexagon.getHexagonBorderColor();
+				Color oldInnerColor = oldHexagon.getHexagonInnerColor();
 				if (dlgHexagon.getColor() != null && dlgHexagon.getInnerColor() == null) {
 					newHexagon.setHexagonBorderColor(dlgHexagon.getColor());
 					newHexagon.setHexagonInnerColor(oldInnerColor);

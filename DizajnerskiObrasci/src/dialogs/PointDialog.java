@@ -83,7 +83,7 @@ public class PointDialog extends JDialog {
 
 		pnlCenter = new JPanel();
 		getContentPane().add(pnlCenter, BorderLayout.CENTER);
-		pnlCenter.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+		pnlCenter.setLayout(new MigLayout("", "[][][][grow]", "[][][][][]"));
 
 		lblPointX = new JLabel("X:");
 		pnlCenter.add(lblPointX, "cell 0 0,alignx left");
@@ -99,7 +99,7 @@ public class PointDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtPointX, "cell 1 0,growx");
+		pnlCenter.add(txtPointX, "cell 3 0,growx");
 		txtPointX.setColumns(10);
 
 		lblPointY = new JLabel("Y:");
@@ -116,11 +116,8 @@ public class PointDialog extends JDialog {
 				}
 			}
 		});
-		pnlCenter.add(txtPointY, "cell 1 1,growx");
+		pnlCenter.add(txtPointY, "cell 3 1,growx");
 		txtPointY.setColumns(10);
-
-		lblColor = new JLabel("Color:");
-		pnlCenter.add(lblColor, "cell 0 2");
 
 		btnColor = new JButton("Color");
 		btnColor.setBackground(Color.BLACK);
@@ -130,7 +127,10 @@ public class PointDialog extends JDialog {
 				color = JColorChooser.showDialog(null, "Outer circle border color:", Color.RED);
 			}
 		});
-		pnlCenter.add(btnColor, "cell 1 2,alignx center");
+
+		lblColor = new JLabel("Color:");
+		pnlCenter.add(lblColor, "cell 1 2");
+		pnlCenter.add(btnColor, "cell 3 2,alignx center");
 
 		pnlBottom = new JPanel();
 		getContentPane().add(pnlBottom, BorderLayout.SOUTH);
